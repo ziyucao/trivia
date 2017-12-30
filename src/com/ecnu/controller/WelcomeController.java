@@ -1,6 +1,6 @@
 package com.ecnu.controller;
 
-import com.ecnu.DAO.DBConnection;
+import com.ecnu.dao.DBConnection;
 import com.ecnu.entities.AvailableGroupEntity;
 import com.ecnu.entities.CurrentGroupEntity;
 import com.ecnu.entities.PlayerEntity;
@@ -30,35 +30,29 @@ public class WelcomeController {
         q.setParameter(0, name);
         List l = q.list();
         String redirect;
-        if (l == null || l.size() == 0)
-        {
+        if (l == null || l.size() == 0) {
             Transaction t = s.beginTransaction();
             PlayerEntity p = new PlayerEntity();
             p.setUserId(name);
             List<CurrentGroupEntity> cg = s.createQuery("from CurrentGroupEntity ").list();
             CurrentGroupEntity cge = cg.get(0);
-            if (cge.getId() == 0)
-            {
+            if (cge.getId() == 0) {
                 cge.setId(1);
                 cge.setPlayerSum(1);
                 p.setGroupId(1);
                 p.setIdInGroup(1);
                 p.setIsAnswering(0);
                 p.setPosition(0);
-            }
-            else
-            {
+            } else {
                 p.setGroupId(cge.getId());
                 p.setIdInGroup(cge.getPlayerSum() + 1);
                 p.setIsAnswering(0);
                 p.setPosition(0);
-                if (cge.getPlayerSum() == 5)
-                {
+                if (cge.getPlayerSum() == 5) {
                     List<AvailableGroupEntity> al = s.createQuery("select id from AvailableGroupEntity ").list();
                     if (al == null || al.size() == 0)
                         cge.setId(cge.getId() + 1);
-                    else
-                    {
+                    else {
                         cge.setId(al.get(0).getId());
                         Query temp = s.createQuery("delete from AvailableGroupEntity where id = ?");
                         temp.setParameter(0, cge.getId());
@@ -72,10 +66,8 @@ public class WelcomeController {
             s.save(p);
             t.commit();
             redirect = "waitingroom";
-            model.addAttribute("name",name);
-        }
-        else
-        {
+            model.addAttribute("name", name);
+        } else {
             redirect = "welcome";
             model.addAttribute("errorMessage", "用户名重复！");
         }

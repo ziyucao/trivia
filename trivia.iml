@@ -28,6 +28,7 @@
       <configuration>
         <datasource-map>
           <unit-entry name="hibernate.cfg.xml" value="0b781376-ceda-43e7-a464-5685ec609696" />
+          <unit-entry name="web:WEB-INF:classes:hibernate.cfg.xml" value="8af1ec55-d5a3-442d-addb-5ebc0b620836" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/web/WEB-INF/classes/hibernate.cfg.xml" />
