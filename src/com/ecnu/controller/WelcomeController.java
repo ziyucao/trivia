@@ -48,7 +48,7 @@ public class WelcomeController {
                 p.setGroupId(cge.getId());
                 p.setIdInGroup(cge.getPlayerSum() + 1);
                 p.setIsAnswering(0);
-                if (cge.getPlayerSum() == 5) {
+                if (cge.getPlayerSum() == 3) {
                     List<AvailableGroupEntity> al = s.createQuery("select id from AvailableGroupEntity ").list();
                     if (al == null || al.size() == 0)
                         cge.setId(cge.getId() + 1);
