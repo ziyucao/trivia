@@ -18,15 +18,17 @@
             padding: 20px 12px 0;
             height: 60px;
         }
+
         .content {
             padding: 20px 20px;
             position: absolute;
             width: 100%;
-            top: 164px;
+            top: 7.5rem;
             bottom: 0px;
             left: 0px;
             text-align: center;
         }
+
         .centerParent {
             display: flex;
             display: -webkit-flex;
@@ -47,7 +49,7 @@
         <div class="columns">
             <div class="column col-3">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header" style="padding: 0.4rem;">
                         <div class="card-title h5">Player1</div>
                         <div class="card-subtitle text-gray">Coins:</div>
                     </div>
@@ -55,7 +57,7 @@
             </div>
             <div class="column col-3">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header" style="padding: 0.4rem;">
                         <div class="card-title h5">Player2</div>
                         <div class="card-subtitle text-gray">Coins:</div>
                     </div>
@@ -63,7 +65,7 @@
             </div>
             <div class="column col-3">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header" style="padding: 0.4rem;">
                         <div class="card-title h5">Player3</div>
                         <div class="card-subtitle text-gray">Coins:</div>
                     </div>
@@ -71,7 +73,7 @@
             </div>
             <div class="column col-3">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header" style="padding: 0.4rem;">
                         <div class="card-title h5">Player4</div>
                         <div class="card-subtitle text-gray">Coins:</div>
                     </div>
@@ -82,12 +84,10 @@
     <div class="content">
         <div class="card">
             <div class="centerParent">
-                <div class="columns" style="width: 100%">
-                    <div class="column col-4 col-mx-auto">
-                        <h1>Hello, ${name}.</h1> <br>
-                        <h4><b>MATCHING...</b></h4>
-                        <div class="loading loading-lg"></div>
-                    </div>
+                <div class="column col-12 col-mx-auto">
+                    <h1>Hello, ${name}.</h1> <br>
+                    <h4><b>MATCHING...</b></h4>
+                    <div class="loading loading-lg"></div>
                 </div>
             </div>
         </div>
