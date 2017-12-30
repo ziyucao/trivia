@@ -10,7 +10,7 @@ public class PlayerEntity {
     private Integer groupId;
     private Integer coins;
     private Integer position;
-    private Byte isAnswering;
+    private Integer isAnswering;
     private Integer idInGroup;
 
     @Id
@@ -55,11 +55,11 @@ public class PlayerEntity {
 
     @Basic
     @Column(name = "is_answering")
-    public Byte getIsAnswering() {
+    public Integer getIsAnswering() {
         return isAnswering;
     }
 
-    public void setIsAnswering(Byte isAnswering) {
+    public void setIsAnswering(Integer isAnswering) {
         this.isAnswering = isAnswering;
     }
 

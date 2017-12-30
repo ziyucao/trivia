@@ -52,7 +52,8 @@
                     <div class="input-group col-4 col-xl-4 col-lg-4 col-md-6 col-sm-10">
                         <span class="input-group-addon">My Name is</span>
                         <input type="text" name="name" class="form-input" placeholder="...">
-                        <button class="btn btn-primary input-group-btn" type="submit">Play</button>
+                        <button class="btn btn-primary input-group-btn" type="submit">Play</button><br>
+                        ${errorMessage}
                     </div>
                     <div class="col-4 col-xl-4 col-lg-4 col-md-3 col-sm-1"></div>
                 </div>

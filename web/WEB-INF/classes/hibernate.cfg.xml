@@ -6,11 +6,13 @@
     <session-factory>
         <property name="connection.url">jdbc:mysql://47.100.48.96:3306/</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">123456</property>
         <mapping class="com.ecnu.entities.AvailableGroupEntity"/>
         <mapping class="com.ecnu.entities.CurrentGroupEntity"/>
         <mapping class="com.ecnu.entities.PlayerEntity"/>
         <mapping class="com.ecnu.entities.QuestionEntity"/>
-        <mapping class="com.ecnu.entities.UserEntity"/>
         <!-- <property name="connection.username"/> -->
         <!-- <property name="connection.password"/> -->
 
