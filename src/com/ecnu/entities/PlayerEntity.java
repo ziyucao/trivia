@@ -1,7 +1,6 @@
 package com.ecnu.entities;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Objects;
 
 @Entity
@@ -31,19 +30,14 @@ public class PlayerEntity {
      * 用户在房间中的序号
      */
     private Integer idInGroup;
+    /**
+     * 用户是否在禁闭室中
+     */
+    private Integer isPunished;
 
     /**
      * Constructor
      */
-    public PlayerEntity(String userId, Integer groupId, Integer coins, Integer position, Integer isAnswering, Integer idInGroup) {
-        this.userId = userId;
-        this.groupId = groupId;
-        this.coins = coins;
-        this.position = position;
-        this.isAnswering = isAnswering;
-        this.idInGroup = idInGroup;
-    }
-
     /**
      * EmptyConstructor
      */
@@ -167,5 +161,15 @@ public class PlayerEntity {
     public int hashCode() {
 
         return Objects.hash(userId, groupId, coins, position, isAnswering, idInGroup);
+    }
+
+    @Basic
+    @Column(name = "is_punished")
+    public Integer getIsPunished() {
+        return isPunished;
+    }
+
+    public void setIsPunished(Integer isPunished) {
+        this.isPunished = isPunished;
     }
 }

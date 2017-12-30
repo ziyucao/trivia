@@ -34,20 +34,20 @@ public class WelcomeController {
             Transaction t = s.beginTransaction();
             PlayerEntity p = new PlayerEntity();
             p.setUserId(name);
-            List<CurrentGroupEntity> cg = s.createQuery("from CurrentGroupEntity ").list();
-            CurrentGroupEntity cge = cg.get(0);
-            if (cge.getId() == 0) {
+            List<CurrentGroupEntity> cg = s.createQuery("from CurrentGroupEntity").list();
+            CurrentGroupEntity cge = null;
+            if (cg == null || cg.size() == 0) {
+                cge =  new CurrentGroupEntity();
                 cge.setId(1);
                 cge.setPlayerSum(1);
                 p.setGroupId(1);
                 p.setIdInGroup(1);
                 p.setIsAnswering(0);
-                p.setPosition(0);
             } else {
+                cge =  cg.get(0);
                 p.setGroupId(cge.getId());
                 p.setIdInGroup(cge.getPlayerSum() + 1);
                 p.setIsAnswering(0);
-                p.setPosition(0);
                 if (cge.getPlayerSum() == 5) {
                     List<AvailableGroupEntity> al = s.createQuery("select id from AvailableGroupEntity ").list();
                     if (al == null || al.size() == 0)
