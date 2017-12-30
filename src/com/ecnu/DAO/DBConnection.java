@@ -1,4 +1,4 @@
-package com.ecnu.DAO;
+package com.ecnu.dao;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Metamodel;

@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <title>Trivia</title>
     <style>
         .welcome {
@@ -30,6 +30,11 @@
             align-items: center; /*指定垂直居中*/
         }
     </style>
+    <%--<script>--%>
+    <%--function checkName() {--%>
+    <%--document.getElementById("input-hint").innerText = "The name is invalid.";--%>
+    <%--}--%>
+    <%--</script>--%>
 </head>
 
 <header class="navbar bg-primary" style="padding:15px 0px">
@@ -52,11 +57,12 @@
                     <div class="input-group col-4 col-xl-4 col-lg-4 col-md-6 col-sm-10">
                         <span class="input-group-addon">My Name is</span>
                         <input type="text" name="name" class="form-input" placeholder="...">
-                        <button class="btn btn-primary input-group-btn" type="submit">Play</button><br>
-                        ${errorMessage}
+                        <button class="btn btn-primary input-group-btn" type="submit">Play
+                        </button>
                     </div>
                     <div class="col-4 col-xl-4 col-lg-4 col-md-3 col-sm-1"></div>
                 </div>
+                <p class="form-input-hint text-error" id="input-hint">${errorMessage}</p>
             </form>
         </div>
     </div>
