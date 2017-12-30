@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-4 col-xl-4 col-lg-4 col-md-3 col-sm-1"></div>
                 </div>
-                <p class="form-input-hint text-error" id="input-hint"></p>
+                <p class="form-input-hint text-error" id="input-hint">${errorMessage}</p>
             </form>
         </div>
     </div>

@@ -1,6 +1,7 @@
 package com.ecnu.entities;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Objects;
 
 @Entity
@@ -25,7 +26,7 @@ public class PlayerEntity {
     /**
      * 是否正在回答问题
      */
-    private Byte isAnswering;
+    private Integer isAnswering;
     /**
      * 用户在房间中的序号
      */
@@ -34,7 +35,7 @@ public class PlayerEntity {
     /**
      * Constructor
      */
-    public PlayerEntity(String userId, Integer groupId, Integer coins, Integer position, Byte isAnswering, Integer idInGroup) {
+    public PlayerEntity(String userId, Integer groupId, Integer coins, Integer position, Integer isAnswering, Integer idInGroup) {
         this.userId = userId;
         this.groupId = groupId;
         this.coins = coins;
@@ -119,14 +120,14 @@ public class PlayerEntity {
      */
     @Basic
     @Column(name = "is_answering")
-    public Byte getIsAnswering() {
+    public Integer getIsAnswering() {
         return isAnswering;
     }
 
     /**
      * 设置用户是否正在回答问题
      */
-    public void setIsAnswering(Byte isAnswering) {
+    public void setIsAnswering(Integer isAnswering) {
         this.isAnswering = isAnswering;
     }
 
