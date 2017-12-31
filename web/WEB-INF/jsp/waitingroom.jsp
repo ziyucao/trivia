@@ -56,5 +56,24 @@
         </div>
     </div>
 </div>
+<script>
+
+    setInterval(post, 3000);
+
+    function post() {
+        var temp = document.createElement("form");
+        temp.action = "gameroom";
+        temp.method = "post";
+        temp.style.display = "none";
+        var opt = document.createElement("textarea");
+        opt.name = "name";
+        opt.value = "${name}";
+        temp.appendChild(opt);
+        document.body.appendChild(temp);
+        temp.submit();
+        return temp;
+    }
+
+</script>
 </body>
 </html>
