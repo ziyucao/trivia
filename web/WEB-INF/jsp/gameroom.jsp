@@ -93,10 +93,14 @@
     </div>
 </div>
 <script>
-    document.getElementById("name1").innerText = "${name}";
-    document.getElementById("name2").innerText = "${name}";
-    document.getElementById("name3").innerText = "${name}";
-    document.getElementById("name4").innerText = "${name}";
+    function $(Nid) {
+        return document.getElementById(Nid);
+    }
+
+    $("name1").innerText = "${name}";
+    $("name2").innerText = "${name}";
+    $("name3").innerText = "${name}";
+    $("name4").innerText = "${name}";
 </script>
 </body>
 </html>

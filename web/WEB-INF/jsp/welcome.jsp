@@ -30,11 +30,6 @@
             align-items: center; /*指定垂直居中*/
         }
     </style>
-    <%--<script>--%>
-    <%--function checkName() {--%>
-    <%--document.getElementById("input-hint").innerText = "The name is invalid.";--%>
-    <%--}--%>
-    <%--</script>--%>
 </head>
 
 <header class="navbar bg-primary" style="padding:15px 0px">
@@ -67,6 +62,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 </body>
 </html>
