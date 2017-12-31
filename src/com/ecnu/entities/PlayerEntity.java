@@ -17,15 +17,15 @@ public class PlayerEntity {
     /**
      * 金币数量
      */
-    private Integer coins;
+    private Integer coins = 0;
     /**
      * 骰子所在棋盘的位置
      */
-    private Integer position;
+    private Integer position = 0;
     /**
      * 是否正在回答问题
      */
-    private Integer isAnswering;
+    private Integer isAnswering = 0;
     /**
      * 用户在房间中的序号
      */
@@ -33,7 +33,7 @@ public class PlayerEntity {
     /**
      * 用户是否在禁闭室中
      */
-    private Integer isPunished;
+    private Integer isPunished = 0;
 
     /**
      * Constructor

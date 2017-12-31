@@ -1,14 +1,13 @@
 package com.ecnu.service;
 
-import com.ecnu.dao.DBConnection;
-import com.ecnu.dao.DeleteDAO;
-import com.ecnu.dao.InsertDAO;
+import com.ecnu.dao.*;
 import com.ecnu.entities.AvailableGroupEntity;
 import com.ecnu.entities.CurrentGroupEntity;
 import com.ecnu.entities.PlayerEntity;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerService {
@@ -52,7 +51,7 @@ public class PlayerService {
                     else {
                         cge.setId(al.get(0).getId());
 
-                        DeleteDAO.deleteAvailableGroup(cge.getId());
+                        AvailableGroupDAO.deleteAvailableGroup(cge.getId());
                     }
                     cge.setPlayerSum(0);
                 }
@@ -71,10 +70,10 @@ public class PlayerService {
 //                q.executeUpdate();
 //                t.commit();
 
-                DeleteDAO.deleteCurrentGroup(oldId);
+                CurrentGroupDAO.deleteCurrentGroup(oldId);
             }
-            InsertDAO.insertCurrentGroup(cge);
-            InsertDAO.insertPlayer(pe);
+            CurrentGroupDAO.insertCurrentGroup(cge);
+            PlayerDAO.insertPlayer(pe);
         }
         else
         {
@@ -82,5 +81,40 @@ public class PlayerService {
         }
         s.close();
         return result;
+    }
+
+    /**
+     * return value > 0 : (game is end)the index of players in group
+     * return value = -1 : game is not end
+     *
+     * */
+    public static int gameIsEnd(PlayerEntity pe)
+    {
+        ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
+        if (players != null)
+        {
+            for (int i = 0; i < players.size(); i++)
+            {
+                if (players.get(i) != null && players.get(i).getCoins() == 6)
+                    return i;
+            }
+        }
+        return -1;
+    }
+
+    public static void updateState(PlayerEntity pe, int questionId, String answer)
+    {
+        if (pe != null)
+        {
+            boolean isAnswerCorrrect = QuestionDAO.checkAnswer(questionId, answer);
+            if (isAnswerCorrrect)
+            {
+                pe.setCoins(pe.getCoins() + 1);
+            }
+            else
+            {
+                pe.setIsPunished(1);
+            }
+        }
     }
 }
