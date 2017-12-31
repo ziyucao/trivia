@@ -11,6 +11,9 @@ import javax.persistence.metamodel.EntityType;
 
 import java.util.Map;
 
+/**
+ * @author hibernate
+ */
 public class DBConnection {
     private static final SessionFactory ourSessionFactory;
 

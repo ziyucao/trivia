@@ -4,10 +4,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+/**
+ * @author Ding Donglai
+ */
 public class DeleteDAO {
 
-    public static void deleteAvailableGroup(int groupId)
-    {
+    public static void deleteAvailableGroup(int groupId) {
         Session s = DBConnection.getSession();
         Transaction t = s.beginTransaction();
 
@@ -19,8 +21,7 @@ public class DeleteDAO {
         s.close();
     }
 
-    public static void deleteCurrentGroup(int groupId)
-    {
+    public static void deleteCurrentGroup(int groupId) {
         Session s = DBConnection.getSession();
         Transaction t = s.beginTransaction();
 
