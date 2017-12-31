@@ -15,6 +15,16 @@ public class GameController
     @RequestMapping(value = "/gameroom")
     public String GameController(ModelMap model, @RequestParam String name)
     {
-        return "gameroom";
+        //如果房间人满
+        if (true)
+        {
+            return "gameroom";
+        }
+        //否则
+        else
+        {
+            model.addAttribute("name", name);
+            return "waitingroom";
+        }
     }
 }
