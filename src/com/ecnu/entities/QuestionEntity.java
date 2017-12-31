@@ -86,8 +86,12 @@ public class QuestionEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         QuestionEntity that = (QuestionEntity) o;
         return id == that.id &&
                 Objects.equals(statement, that.statement) &&

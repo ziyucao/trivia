@@ -31,8 +31,12 @@ public class CurrentGroupEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CurrentGroupEntity that = (CurrentGroupEntity) o;
         return id == that.id &&
                 Objects.equals(playerSum, that.playerSum);

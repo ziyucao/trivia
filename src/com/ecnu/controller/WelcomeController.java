@@ -37,22 +37,22 @@ public class WelcomeController {
             List<CurrentGroupEntity> cg = s.createQuery("from CurrentGroupEntity").list();
             CurrentGroupEntity cge = null;
             if (cg == null || cg.size() == 0) {
-                cge =  new CurrentGroupEntity();
+                cge = new CurrentGroupEntity();
                 cge.setId(1);
                 cge.setPlayerSum(1);
                 p.setGroupId(1);
                 p.setIdInGroup(1);
                 p.setIsAnswering(0);
             } else {
-                cge =  cg.get(0);
+                cge = cg.get(0);
                 p.setGroupId(cge.getId());
                 p.setIdInGroup(cge.getPlayerSum() + 1);
                 p.setIsAnswering(0);
                 if (cge.getPlayerSum() == 3) {
                     List<AvailableGroupEntity> al = s.createQuery("select id from AvailableGroupEntity ").list();
-                    if (al == null || al.size() == 0)
+                    if (al == null || al.size() == 0) {
                         cge.setId(cge.getId() + 1);
-                    else {
+                    } else {
                         cge.setId(al.get(0).getId());
                         Query temp = s.createQuery("delete from AvailableGroupEntity where id = ?");
                         temp.setParameter(0, cge.getId());

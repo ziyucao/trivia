@@ -50,32 +50,32 @@
             <div class="column col-3">
                 <div class="card">
                     <div class="card-header" style="padding: 0.4rem;">
-                        <div class="card-title h5">Player1</div>
-                        <div class="card-subtitle text-gray">Coins:</div>
+                        <div class="card-title h5" id="name1">Player1</div>
+                        <div class="card-subtitle text-gray" id="coin1">Coins:</div>
                     </div>
                 </div>
             </div>
             <div class="column col-3">
                 <div class="card">
                     <div class="card-header" style="padding: 0.4rem;">
-                        <div class="card-title h5">Player2</div>
-                        <div class="card-subtitle text-gray">Coins:</div>
+                        <div class="card-title h5" id="name2">Player2</div>
+                        <div class="card-subtitle text-gray" id="coin2">Coins:</div>
                     </div>
                 </div>
             </div>
             <div class="column col-3">
                 <div class="card">
                     <div class="card-header" style="padding: 0.4rem;">
-                        <div class="card-title h5">Player3</div>
-                        <div class="card-subtitle text-gray">Coins:</div>
+                        <div class="card-title h5" id="name3">Player3</div>
+                        <div class="card-subtitle text-gray" id="coin3">Coins:</div>
                     </div>
                 </div>
             </div>
             <div class="column col-3">
                 <div class="card">
                     <div class="card-header" style="padding: 0.4rem;">
-                        <div class="card-title h5">Player4</div>
-                        <div class="card-subtitle text-gray">Coins:</div>
+                        <div class="card-title h5" id="name4">Player4</div>
+                        <div class="card-subtitle text-gray" id="coin4">Coins:</div>
                     </div>
                 </div>
             </div>
@@ -94,5 +94,12 @@
     </div>
 </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    document.getElementById("name1").innerText = ${name};
+    document.getElementById("name2").innerText = ${name};
+    document.getElementById("name3").innerText = ${name};
+    document.getElementById("name4").innerText = ${name};
+    // }
+</script>
 </body>
 </html>

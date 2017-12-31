@@ -38,6 +38,15 @@ public class PlayerEntity {
     /**
      * Constructor
      */
+    public PlayerEntity(String userId, Integer groupId, Integer coins, Integer position, Integer isAnswering, Integer idInGroup, Integer isPunished) {
+        this.userId = userId;
+        this.groupId = groupId;
+        this.coins = coins;
+        this.position = position;
+        this.isAnswering = isAnswering;
+        this.idInGroup = idInGroup;
+        this.isPunished = isPunished;
+    }
     /**
      * EmptyConstructor
      */
@@ -146,15 +155,20 @@ public class PlayerEntity {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         PlayerEntity that = (PlayerEntity) o;
         return Objects.equals(userId, that.userId) &&
                 Objects.equals(groupId, that.groupId) &&
                 Objects.equals(coins, that.coins) &&
                 Objects.equals(position, that.position) &&
                 Objects.equals(isAnswering, that.isAnswering) &&
-                Objects.equals(idInGroup, that.idInGroup);
+                Objects.equals(idInGroup, that.idInGroup) &&
+                Objects.equals(isPunished, that.isPunished);
     }
 
     @Override
