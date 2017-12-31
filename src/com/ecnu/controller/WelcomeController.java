@@ -15,7 +15,7 @@ public class WelcomeController {
         return "welcome";
     }
 
-    @RequestMapping(value = "/waitingroom", method = RequestMethod.POST)
+    @RequestMapping(value = "/waitingroom", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String login(ModelMap model, @RequestParam String name) {
         String redirect;
         PlayerEntity pe = new PlayerEntity();

@@ -24,8 +24,8 @@
             position: absolute;
             width: 100%;
             top: 7.5rem;
-            bottom: 0px;
-            left: 0px;
+            bottom: 0;
+            left: 0;
             text-align: center;
         }
 
@@ -38,12 +38,13 @@
     </style>
 </head>
 
-<header class="navbar bg-primary" style="padding:15px 0px">
+<header class="navbar bg-primary" style="padding:15px 0">
     <section class="navbar-center">
         <a href="#" class="navbar-brand text-light" style="padding-left: 20px">TRIVIA</a>
     </section>
 </header>
 
+<body>
 <div class="container">
     <div class="top">
         <div class="columns">
@@ -91,8 +92,11 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script>
+    document.getElementById("name1").innerText = "${name}";
+    document.getElementById("name2").innerText = "${name}";
+    document.getElementById("name3").innerText = "${name}";
+    document.getElementById("name4").innerText = "${name}";
 </script>
 </body>
 </html>
