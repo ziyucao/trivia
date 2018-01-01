@@ -11,6 +11,8 @@ import java.util.Random;
 
 public class GameService {
 
+    private static final int QUESTION_SUM = 20;
+    private static final int MAX_COINS = 6;
     public static int gameIsEnd(PlayerEntity pe)
     {
         ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
@@ -18,8 +20,10 @@ public class GameService {
         {
             for (int i = 0; i < players.size(); i++)
             {
-                if (players.get(i) != null && players.get(i).getCoins() == 6)
+                if (players.get(i) != null && players.get(i).getCoins() == MAX_COINS)
+                {
                     return i;
+                }
             }
         }
         return -1;
@@ -39,12 +43,12 @@ public class GameService {
                 if (dice % 2 == 0)
                 {
                     pe.setIsPunished(0);
-                    pe.setPosition((pe.getPosition() + dice) % 20);
+                    pe.setPosition((pe.getPosition() + dice) % QUESTION_SUM);
                 }
             }
             else
             {
-                pe.setPosition((pe.getPosition() + dice) % 20);
+                pe.setPosition((pe.getPosition() + dice) % QUESTION_SUM);
             }
 
             PlayerDAO.updatePlayer(pe);

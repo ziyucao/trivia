@@ -35,8 +35,8 @@ public class GameController
         }
     }
 
-    @RequestMapping(value = "/gameroom", method = RequestMethod.POST)
-    public String dicing(ModelMap model, @RequestParam String name)
+    @RequestMapping(value = "/rolling", method = RequestMethod.POST)
+    public String rolling(ModelMap model, @RequestParam String name)
     {
         PlayerEntity pe = PlayerDAO.getPlayer(name);
         int questionId = GameService.diceAndGetQuestion(pe);
@@ -57,7 +57,7 @@ public class GameController
         return "gameroom";
     }
 
-    @RequestMapping(value = "/gameroom", method = RequestMethod.POST)
+    @RequestMapping(value = "/answer", method = RequestMethod.POST)
     public String answerQuestion(ModelMap model, @RequestParam String name, @RequestParam int questionId, @RequestParam String option)
     {
         PlayerEntity pe = PlayerDAO.getPlayer(name);

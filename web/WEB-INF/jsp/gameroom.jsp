@@ -85,8 +85,9 @@
     <div class="content">
         <div class="card">
             <div class="centerParent">
-                <div class="column col-12 col-mx-auto">
-                    <p> test</p>
+                <div class="column col-8 col-mx-auto">
+                    <button class="btn" id="rolling-btn" onclick="rolling">Rolling</button>
+                    <p>test</p>
                 </div>
             </div>
         </div>
@@ -97,10 +98,29 @@
         return document.getElementById(Nid);
     }
 
+    var isAnswering = "${isAnswering}";
+    if (isAnswering != "1") {
+        $("rolling-btn").style.display = "none";
+    }
+
     $("name1").innerText = "${name}";
     $("name2").innerText = "${name}";
     $("name3").innerText = "${name}";
     $("name4").innerText = "${name}";
+
+    function rolling() {
+        var temp = document.createElement("form");
+        temp.action = "gameroom";
+        temp.method = "post";
+        temp.style.display = "none";
+        var opt = document.createElement("textarea");
+        opt.name = "name";
+        opt.value = "${name}";
+        temp.appendChild(opt);
+        document.body.appendChild(temp);
+        temp.submit();
+        return temp;
+    }
 </script>
 </body>
 </html>
