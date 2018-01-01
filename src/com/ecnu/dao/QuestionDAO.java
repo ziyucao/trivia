@@ -9,6 +9,10 @@ import java.util.List;
 
 public class QuestionDAO {
 
+    /**
+     * @param index
+     * @return question statement
+     */
     public static String getQuestion(int index)
     {
         String questionInfo = null;
@@ -26,6 +30,10 @@ public class QuestionDAO {
         return questionInfo;
     }
 
+    /**
+     * @param index
+     * @return question option statements
+     */
     public static ArrayList<String> getOption(int index)
     {
         ArrayList<String> options = new ArrayList<>();

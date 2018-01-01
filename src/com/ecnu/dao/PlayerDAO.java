@@ -54,7 +54,7 @@ public class PlayerDAO {
         }
     }
 
-    public static PlayerEntity getPlayer(int id)
+    public static PlayerEntity getPlayer(String id)
     {
         PlayerEntity pe = null;
 

@@ -47,6 +47,15 @@ public class PlayerEntity {
         this.idInGroup = idInGroup;
         this.isPunished = isPunished;
     }
+
+    /**
+     * Constructor with user_id
+     */
+    public PlayerEntity(String userId)
+    {
+        this.userId = userId;
+    }
+
     /**
      * EmptyConstructor
      */

@@ -11,6 +11,13 @@ import java.util.Objects;
 public class AvailableGroupEntity {
     private int id;
 
+    public AvailableGroupEntity() {}
+
+    public AvailableGroupEntity(int id)
+    {
+        this.id = id;
+    }
+
     @Id
     @Column(name = "id")
     public int getId() {
