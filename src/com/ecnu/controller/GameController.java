@@ -68,7 +68,7 @@ public class GameController
         }
 
         model.addAttribute("dice", dice);
-        model.addAttribute("isRolled", true);
+        model.addAttribute("isRolled", 1);
         model.addAttribute("questionId", questionId);
         updatePlayerInformationInTheGroup(model, name);
 
@@ -91,7 +91,6 @@ public class GameController
             GameService.nextPlayer(pe);
         }
 
-        model.addAttribute("isAnswered", true);
         updatePlayerInformationInTheGroup(model, name);
 
         return "gameroom";
@@ -101,6 +100,7 @@ public class GameController
     {
         PlayerEntity pe = PlayerDAO.getPlayer(name);
         ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
+
         if (players != null && players.size() == 4)
         {
             for (int i = 0; i < 4; i++)

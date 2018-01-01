@@ -79,7 +79,7 @@ public class PlayerDAO {
         if (pe != null)
         {
             int groupId = pe.getGroupId();
-            Query q = s.createQuery("from PlayerEntity where groupId = ?");
+            Query q = s.createQuery("from PlayerEntity where groupId = ? order by idInGroup asc");
             q.setParameter(0, groupId);
             List result = q.list();
 

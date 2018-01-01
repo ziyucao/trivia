@@ -51,7 +51,7 @@
             <div class="column col-3">
                 <div class="card" id="card1">
                     <div class="card-header" style="padding: 0.4rem;">
-                        <div class="card-title h5" id="name1">Player1</div>
+                        <div class="card-title h5" id="name0">Player0</div>
                         <div class="card-subtitle text-gray" id="coin1">Coins:</div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
             <div class="column col-3">
                 <div class="card" id="card2">
                     <div class="card-header" style="padding: 0.4rem;">
-                        <div class="card-title h5" id="name2">Player2</div>
+                        <div class="card-title h5" id="name1">Player1</div>
                         <div class="card-subtitle text-gray" id="coin2">Coins:</div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
             <div class="column col-3">
                 <div class="card" id="card3">
                     <div class="card-header" style="padding: 0.4rem;">
-                        <div class="card-title h5" id="name3">Player3</div>
+                        <div class="card-title h5" id="name2">Player2</div>
                         <div class="card-subtitle text-gray" id="coin3">Coins:</div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
             <div class="column col-3">
                 <div class="card" id="card4">
                     <div class="card-header" style="padding: 0.4rem;">
-                        <div class="card-title h5" id="name4">Player4</div>
+                        <div class="card-title h5" id="name3">Player3</div>
                         <div class="card-subtitle text-gray" id="coin4">Coins:</div>
                     </div>
                 </div>
@@ -85,43 +85,46 @@
     <div class="content">
         <div class="card">
             <div class="centerParent">
-                <div class="column col-8 col-mx-auto">
+                <div class="column col-8 col-mx-auto" id="answering">
                     <button class="btn" id="rolling-btn" onClick="rolling()">Rolling</button>
-                    <h5 id="rolling-result">0</h5>
                     <div id="question-sheet">
                         <h4 id="question-statement"></h4>
                         <div>
                             <form action="answer" method="post">
                                 <div class="columns">
                                     <div class="col-6" style="padding:0 1rem">
-                                        <div class="card">
+                                        <div class="card" onclick="postAnswer('a')">
                                             <label class="form-radio">
-                                                <input type="radio" name="answer" id="option-a">
-                                                <i class="form-icon"></i> A.
+                                                <input type="radio" name="answer">
+                                                <i class="form-icon"></i>
+                                                <p id="option-a">A.</p>
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-6" style="padding:0 1rem">
-                                        <div class="card">
+                                        <div class="card" onclick="postAnswer('b')">
                                             <label class="form-radio">
-                                                <input type="radio" name="answer" id="option-b">
-                                                <i class="form-icon"></i> B.
+                                                <input type="radio" name="answer">
+                                                <i class="form-icon"></i>
+                                                <p id="option-b">B.</p>
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-6" style="padding:0 1rem">
-                                        <div class="card">
+                                        <div class="card" onclick="postAnswer('c')">
                                             <label class="form-radio">
-                                                <input type="radio" name="answer" id="option-c">
-                                                <i class="form-icon"></i> C.
+                                                <input type="radio" name="answer">
+                                                <i class="form-icon"></i>
+                                                <p id="option-c">C.</p>
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-6" style="padding:0 1rem">
-                                        <div class="card">
+                                        <div class="card" onclick="postAnswer('d')">
                                             <label class="form-radio">
-                                                <input type="radio" name="answer" id="option-d">
-                                                <i class="form-icon"></i> D.
+                                                <input type="radio" name="answer">
+                                                <i class="form-icon"></i>
+                                                <p id="option-d">D.</p>
                                             </label>
                                         </div>
                                     </div>
@@ -130,6 +133,9 @@
                         </div>
                     </div>
                     <p>test</p>
+                </div>
+                <div class="column col-8 col-mx-auto" id="notAnswering">
+                    <h3>等待其他玩家操作……</h3>
                 </div>
             </div>
         </div>
@@ -141,39 +147,56 @@
     }
 
     var isRolled = "${isRolled}";
-    if (isRolled === "true") {
-        $("rolling-btn").style.display = "none";
-        $("rolling-result").style.display = "inline";
-        $("rolling-result").innerText = "${dice}"
-        getQuestionSheet();
-    } else {
-        $("rolling-btn").style.display = "inline";
-        $("rolling-result").style.display = "none";
-        $("rolling-result").innerText = "${dice}"
+    var myName = "${myName}";
+    var myAnswering;
+    if (myName == "${name0}") {
+        myAnswering = "${answering0}"
+        setMe("name0");
     }
+    if (myName == "${name1}") {
+        myAnswering = "${answering1}"
+        setMe("name1");
+    }
+    if (myName == "${name2}") {
+        myAnswering = "${answering2}"
+        setMe("name2");
+    }
+    if (myName == "${name3}") {
+        myAnswering = "${answering3}"
+        setMe("name3");
+    }
+    if (myAnswering !== "1") {
+        $("answering").style.display = "none";
+    } else {
+        $("notAnswering").style.display = "none";
+        if (isRolled === "1") {
+            $("rolling-btn").style.display = "none";
+            getQuestionSheet();
+        } else {
+            $("rolling-btn").style.display = "inline";
+            $("question-sheet").style.display = "none";
+        }
+    }
+
 
     function getQuestionSheet() {
         $("question-statement").innerText = "${question}";
-        var optionA = $("option-a").getAttribute("innerText");
-        $("option-a").innerText = optionA + "${optionA}";
-        var optionB = $("option-b").getAttribute("innerText");
-        $("option-b").innerText = optionB + "${optionB}";
-        var optionC = $("option-c").getAttribute("innerText");
-        $("option-c").innerText = optionC + "${optionC}";
-        var optionD = $("option-d").getAttribute("innerText");
-        $("option-d").innerText = optionD + "${optionD}";
+        $("option-a").innerText = "A." + "${optionA}";
+        $("option-b").innerText = "B." + "${optionB}";
+        $("option-c").innerText = "C." + "${optionC}";
+        $("option-d").innerText = "D." + "${optionD}";
     }
 
-    if ("true" == "${answering1}") {
+    if ("1" == "${answering0}") {
         setIsAnswering("card1");
     }
-    if ("true" == "${answering2}") {
+    if ("1" == "${answering1}") {
         setIsAnswering("card2");
     }
-    if ("true" == "${answering3}") {
+    if ("1" == "${answering2}") {
         setIsAnswering("card3");
     }
-    if ("true" == "${answering4}") {
+    if ("1" == "${answering3}") {
         setIsAnswering("card4");
     }
 
@@ -182,10 +205,14 @@
         $(Nid).setAttribute("style", "border-color: #3634d2;box-shadow: 0 0 0 .12rem rgba(87, 85, 217, .2);");
     }
 
-    $("name1").innerText = "${name0}";
-    $("name2").innerText = "${name1}";
-    $("name3").innerText = "${name2}";
-    $("name4").innerText = "${name3}";
+    function setMe(Nid) {
+        $(Nid).setAttribute("class", "card-title h5 text-success");
+    }
+
+    $("name0").innerText = "${name0}";
+    $("name1").innerText = "${name1}";
+    $("name2").innerText = "${name2}";
+    $("name3").innerText = "${name3}";
 
     var COINS = "Coins:";
     $("coin1").innerText = COINS + "${coin0}";
@@ -206,6 +233,29 @@
         temp.submit();
         return temp;
     }
+
+    function postAnswer(myOption) {
+        var temp = document.createElement("form");
+        temp.action = "answer";
+        temp.method = "post";
+        temp.style.display = "none";
+        var opt1 = document.createElement("textarea");
+        var opt2 = document.createElement("textarea");
+        var opt3 = document.createElement("textarea");
+        opt1.name = "name";
+        opt1.value = "${myName}";
+        opt2.name = "questionId";
+        opt2.value = "${questionId}";
+        opt3.name = "option";
+        opt3.value = myOption;
+        temp.appendChild(opt1);
+        temp.appendChild(opt2);
+        temp.appendChild(opt3);
+        document.body.appendChild(temp);
+        temp.submit();
+        return temp;
+    }
+
 </script>
 </body>
 </html>

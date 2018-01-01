@@ -56,6 +56,7 @@ public class QuestionDAO {
 
     public static boolean checkAnswer(int index, String answer)
     {
+        System.out.println(answer);
         boolean re = false;
         Session s = DBConnection.getSession();
         Query q = s.createQuery("select answer from QuestionEntity where id = ?");
@@ -65,7 +66,9 @@ public class QuestionDAO {
         {
             QuestionEntity qe = (QuestionEntity) q.list().get(0);
             if (answer.equals(qe.getAnswer()))
+            {
                 re = true;
+            }
         }
 
         s.close();
