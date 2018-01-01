@@ -98,13 +98,32 @@ public class GameService {
 
     public static void nextPlayer(PlayerEntity pe)
     {
-        ArrayList<PlayerEntity> players= PlayerDAO.getPlayersInGroup(pe);
+        ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
         if (players !=  null)
         {
-            int nextId = pe.getPosition() % 4;
-            PlayerEntity nextPlayer = players.get(nextId);
-            nextPlayer.setIsAnswering(1);
-            PlayerDAO.updatePlayer(nextPlayer);
+            int nextId = -1;
+            for (int i = 0; i < players.size(); i++)
+            {
+                if (players.get(i).getUserId().equals(pe.getUserId()))
+                {
+                    nextId = i + 1 >= players.size() ? 0 : i + 1;
+                }
+            }
+
+            if (nextId >= 0 && nextId < players.size())
+            {
+                PlayerEntity nextPlayer = players.get(nextId);
+                nextPlayer.setIsAnswering(1);
+                PlayerDAO.updatePlayer(nextPlayer);
+            }
+        }
+    }
+
+    public static void playerQuit(PlayerEntity pe)
+    {
+        if (pe != null)
+        {
+            PlayerDAO.deletePlayer(pe);
         }
     }
 
