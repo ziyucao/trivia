@@ -148,15 +148,19 @@
     switch ("${winnerId}") {
         case "0":
             alert("Winner is ${name0}");
+            post();
             break;
         case "1":
             alert("Winner is ${name1}");
+            post();
             break;
         case "2":
             alert("Winner is ${name2}");
+            post();
             break;
         case "3":
             alert("Winner is ${name3}");
+            post();
             break;
         default :
             break;

@@ -40,10 +40,14 @@ public class GameService {
         {
             if (pe.getIsPunished() == 1)
             {
-                if (dice % 2 == 0)
+                if (dice % 2 == 1)
                 {
                     pe.setIsPunished(0);
                     pe.setPosition((pe.getPosition() + dice) % QUESTION_SUM);
+                }
+                else
+                {
+                    pe.setIsAnswering(0);
                 }
             }
             else
@@ -53,6 +57,10 @@ public class GameService {
 
             PlayerDAO.updatePlayer(pe);
 
+            if (pe.getIsPunished() == 1)
+            {
+                return -1;
+            }
             return pe.getPosition() + 1;
         }
         else

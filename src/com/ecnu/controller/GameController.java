@@ -51,8 +51,15 @@ public class GameController
     public String rolling(ModelMap model, @RequestParam String name)
     {
         int dice = GameService.dicing();
+        System.out.println(dice + " " + name);
         PlayerEntity pe = PlayerDAO.getPlayer(name);
         int questionId = GameService.diceAndGetQuestion(pe, dice);
+        if (questionId < 0)
+        {
+            GameService.nextPlayer(pe);
+            updatePlayerInformationInTheGroup(model, name);
+            return "gameroom";
+        }
         String questionStatement = QuestionDAO.getQuestion(questionId);
         ArrayList<String> options = QuestionDAO.getOption(questionId);
         if (questionStatement != null)
@@ -85,7 +92,7 @@ public class GameController
         {
             GameService.clearWhenGameOver(pe);
             model.addAttribute("winnerId", playerId);
-            return "welcome";
+            return "gameroom";
         } else
         {
             GameService.nextPlayer(pe);
