@@ -33,9 +33,8 @@ public class GameService {
      * @param pe
      * @return question id
      */
-    public static int diceAndGetQuestion(PlayerEntity pe)
+    public static int diceAndGetQuestion(PlayerEntity pe, int dice)
     {
-        int dice = GameService.dicing();
         if (pe != null)
         {
             if (pe.getIsPunished() == 1)
@@ -74,6 +73,7 @@ public class GameService {
             {
                 pe.setIsPunished(1);
             }
+            pe.setIsAnswering(0);
 
             PlayerDAO.updatePlayer(pe);
         }
@@ -92,6 +92,18 @@ public class GameService {
             int groupId = pe.getGroupId();
             AvailableGroupDAO.insertAvailableGroup(new AvailableGroupEntity(groupId));
 
+        }
+    }
+
+    public static void nextPlayer(PlayerEntity pe)
+    {
+        ArrayList<PlayerEntity> players= PlayerDAO.getPlayersInGroup(pe);
+        if (players !=  null)
+        {
+            int nextId = pe.getPosition() % 4;
+            PlayerEntity nextPlayer = players.get(nextId);
+            nextPlayer.setIsAnswering(1);
+            PlayerDAO.updatePlayer(nextPlayer);
         }
     }
 

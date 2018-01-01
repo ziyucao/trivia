@@ -19,12 +19,27 @@ import java.util.ArrayList;
 public class GameController
 {
 
-    @RequestMapping(value = "/gameroom")
+    @RequestMapping(value = "/gameroom", method = RequestMethod.POST)
     public String GameController(ModelMap model, @RequestParam String name)
     {
+        PlayerEntity pe = PlayerDAO.getPlayer(name);
+        ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
+
         //如果房间人满
-        if (true)
+        if (players != null && players.size() == 4)
         {
+            model.addAttribute("name1", players.get(1).getUserId());
+            model.addAttribute("name2", players.get(2).getUserId());
+            model.addAttribute("name3", players.get(3).getUserId());
+            model.addAttribute("name4", players.get(4).getUserId());
+            model.addAttribute("coin1", players.get(1).getCoins());
+            model.addAttribute("coin2", players.get(2).getCoins());
+            model.addAttribute("coin3", players.get(3).getCoins());
+            model.addAttribute("coin4", players.get(4).getCoins());
+            model.addAttribute("myName", name);
+            model.addAttribute("isAnswering", pe.getIsAnswering());
+            model.addAttribute("isPunished", pe.getIsPunished());
+
             return "gameroom";
         }
         //否则
@@ -35,11 +50,12 @@ public class GameController
         }
     }
 
-    @RequestMapping(value = "/rolling", method = RequestMethod.POST)
+    @RequestMapping(value = "/rolling")
     public String rolling(ModelMap model, @RequestParam String name)
     {
+        int dice = GameService.dicing();
         PlayerEntity pe = PlayerDAO.getPlayer(name);
-        int questionId = GameService.diceAndGetQuestion(pe);
+        int questionId = GameService.diceAndGetQuestion(pe, dice);
         String questionStatement = QuestionDAO.getQuestion(questionId);
         ArrayList<String> options = QuestionDAO.getOption(questionId);
         if (questionStatement != null)
@@ -53,6 +69,9 @@ public class GameController
             model.addAttribute("optionC", options.get(2));
             model.addAttribute("optionD", options.get(3));
         }
+
+        model.addAttribute("dice", dice);
+        model.addAttribute("isRolled", true);
 
         return "gameroom";
     }
@@ -69,7 +88,14 @@ public class GameController
             model.addAttribute("winnerId", playerId);
             return "welcome";
         }
+        else
+        {
+            GameService.nextPlayer(pe);
+        }
+
+        model.addAttribute("isAnswered", true);
 
         return "gameroom";
     }
+
 }
