@@ -10,7 +10,11 @@ import org.hibernate.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerService {
+/**
+ * @author Ding Donglai
+ */
+public class PlayerService
+{
 
     public static boolean login(PlayerEntity pe)
     {
@@ -27,35 +31,41 @@ public class PlayerService {
         q.setParameter(0, pe.getUserId());
         List l = q.list();
 
-        if (l == null || l.size() == 0) {
+        if (l == null || l.size() == 0)
+        {
 
             List<CurrentGroupEntity> cg = s.createQuery("from CurrentGroupEntity").list();
             CurrentGroupEntity cge = null;
-            if (cg == null || cg.size() == 0) {
+            if (cg == null || cg.size() == 0)
+            {
                 cge = new CurrentGroupEntity();
                 cge.setId(1);
                 cge.setPlayerSum(1);
                 pe.setGroupId(1);
                 pe.setIdInGroup(1);
                 s.save(cge);
-            } else {
+            } else
+            {
                 cge = cg.get(0);
                 int oldId = cge.getId();
                 pe.setGroupId(cge.getId());
                 pe.setIdInGroup(cge.getPlayerSum() + 1);
 
-                if (cge.getPlayerSum() == 3) {
+                if (cge.getPlayerSum() == 3)
+                {
                     List<AvailableGroupEntity> al = s.createQuery("select id from AvailableGroupEntity ").list();
                     if (al == null || al.size() == 0)
+                    {
                         cge.setId(cge.getId() + 1);
-                    else {
+                    } else
+                    {
                         cge.setId(al.get(0).getId());
 
                         AvailableGroupDAO.deleteAvailableGroup(cge.getId());
                     }
                     cge.setPlayerSum(0);
-                }
-                else {
+                } else
+                {
                     cge.setPlayerSum(cge.getPlayerSum() + 1);
                 }
                 /**
@@ -73,9 +83,12 @@ public class PlayerService {
                 CurrentGroupDAO.deleteCurrentGroup(oldId);
             }
             CurrentGroupDAO.insertCurrentGroup(cge);
+            if (pe.getIdInGroup() == 1)
+            {
+                pe.setIsAnswering(1);
+            }
             PlayerDAO.insertPlayer(pe);
-        }
-        else
+        } else
         {
             result = false;
         }
@@ -86,8 +99,7 @@ public class PlayerService {
     /**
      * return value > 0 : (game is end)the index of players in group
      * return value = -1 : game is not end
-     *
-     * */
+     */
     public static int gameIsEnd(PlayerEntity pe)
     {
         ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
@@ -96,7 +108,9 @@ public class PlayerService {
             for (int i = 0; i < players.size(); i++)
             {
                 if (players.get(i) != null && players.get(i).getCoins() == 6)
+                {
                     return i;
+                }
             }
         }
         return -1;
@@ -110,8 +124,7 @@ public class PlayerService {
             if (isAnswerCorrrect)
             {
                 pe.setCoins(pe.getCoins() + 1);
-            }
-            else
+            } else
             {
                 pe.setIsPunished(1);
             }

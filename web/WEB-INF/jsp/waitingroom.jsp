@@ -47,7 +47,7 @@
                     <h1>Hello, ${name}.</h1> <br>
                 </div>
                 <div class="column col-3 col-sm-6 col-lg-4 col-mx-auto">
-                    <div class="card" style="padding: 20px">
+                    <div class="card" style="padding: 20px; background: #e5e5f9">
                         <div class="loading loading-lg"></div>
                         <h4><b>MATCHING...</b></h4>
                     </div>
@@ -58,7 +58,7 @@
 </div>
 <script>
 
-    setInterval(post, 3000);
+    setInterval(post, 2000);
 
     function post() {
         var temp = document.createElement("form");

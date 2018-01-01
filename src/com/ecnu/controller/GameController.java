@@ -18,28 +18,25 @@ import java.util.ArrayList;
 @Controller
 public class GameController
 {
-
     @RequestMapping(value = "/gameroom", method = RequestMethod.POST)
     public String GameController(ModelMap model, @RequestParam String name)
     {
-        PlayerEntity pe = PlayerDAO.getPlayer(name);
-        ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
-
+//        test
+//        model.addAttribute("name0", 11);
+//        model.addAttribute("name1", 22);
+//        model.addAttribute("name2", 33);
+//        model.addAttribute("name3", 44);
+//        model.addAttribute("coin0", 1);
+//        model.addAttribute("coin1", 1);
+//        model.addAttribute("coin2", 1);
+//        model.addAttribute("coin3", 1);
+//        model.addAttribute("myName", name);
+//        model.addAttribute("isAnswering", true);
+//        model.addAttribute("isPunished", false);
+//        return "gameroom";
         //如果房间人满
-        if (players != null && players.size() == 4)
+        if (updatePlayerInformationInTheGroup(model, name) == 4)
         {
-            model.addAttribute("name1", players.get(1).getUserId());
-            model.addAttribute("name2", players.get(2).getUserId());
-            model.addAttribute("name3", players.get(3).getUserId());
-            model.addAttribute("name4", players.get(4).getUserId());
-            model.addAttribute("coin1", players.get(1).getCoins());
-            model.addAttribute("coin2", players.get(2).getCoins());
-            model.addAttribute("coin3", players.get(3).getCoins());
-            model.addAttribute("coin4", players.get(4).getCoins());
-            model.addAttribute("myName", name);
-            model.addAttribute("isAnswering", pe.getIsAnswering());
-            model.addAttribute("isPunished", pe.getIsPunished());
-
             return "gameroom";
         }
         //否则
@@ -50,7 +47,7 @@ public class GameController
         }
     }
 
-    @RequestMapping(value = "/rolling")
+    @RequestMapping(value = "/rolling", method = RequestMethod.POST)
     public String rolling(ModelMap model, @RequestParam String name)
     {
         int dice = GameService.dicing();
@@ -72,6 +69,7 @@ public class GameController
 
         model.addAttribute("dice", dice);
         model.addAttribute("isRolled", true);
+        updatePlayerInformationInTheGroup(model, name);
 
         return "gameroom";
     }
@@ -87,15 +85,35 @@ public class GameController
             GameService.clearWhenGameOver(pe);
             model.addAttribute("winnerId", playerId);
             return "welcome";
-        }
-        else
+        } else
         {
             GameService.nextPlayer(pe);
         }
 
         model.addAttribute("isAnswered", true);
+        updatePlayerInformationInTheGroup(model, name);
 
         return "gameroom";
+    }
+
+    private int updatePlayerInformationInTheGroup(ModelMap model, String name)
+    {
+        PlayerEntity pe = PlayerDAO.getPlayer(name);
+        ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
+        if (players != null && players.size() == 4)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                model.addAttribute("name" + i, players.get(i).getUserId());
+                model.addAttribute("coin" + i, players.get(i).getCoins());
+                model.addAttribute("answering" + i, players.get(i).getIsAnswering());
+                model.addAttribute("punished" + i, players.get(i).getIsPunished());
+
+            }
+            model.addAttribute("myName", name);
+            return players.size();
+        }
+        return 0;
     }
 
 }

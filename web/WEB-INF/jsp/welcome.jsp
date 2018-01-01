@@ -50,9 +50,10 @@
                 <div class="columns">
                     <div class="col-4 col-xl-4 col-lg-4 col-md-3 col-sm-1"></div>
                     <div class="input-group col-4 col-xl-4 col-lg-4 col-md-6 col-sm-10">
-                        <span class="input-group-addon">My Name is</span>
-                        <input type="text" name="name" class="form-input" placeholder="...">
-                        <button class="btn btn-primary input-group-btn" type="submit">Play
+                        <span class="input-group-addon" style="background: #f1f1fc">My Name is</span>
+                        <input type="text" name="name" class="form-input input-lg" placeholder="...">
+                        <button class="btn btn-lg btn-primary input-group-btn" type="submit" id="play"
+                                onClick="login()">Play
                         </button>
                     </div>
                     <div class="col-4 col-xl-4 col-lg-4 col-md-3 col-sm-1"></div>
@@ -62,5 +63,10 @@
         </div>
     </div>
 </div>
+<script>
+    function login() {
+        document.getElementById("play").setAttribute("class", "btn  btn-lg btn-primary input-group-btn loading");
+    }
+</script>
 </body>
 </html>
