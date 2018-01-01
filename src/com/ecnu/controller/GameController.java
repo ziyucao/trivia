@@ -90,6 +90,7 @@ public class GameController
         int playerId = GameService.gameIsEnd(pe);
         if (playerId >= 0)
         {
+            updatePlayerInformationInTheGroup(model, name);
             GameService.clearWhenGameOver(pe);
             model.addAttribute("winnerId", playerId);
             return "gameroom";
