@@ -145,26 +145,15 @@
         return document.getElementById(Nid);
     }
 
-    switch ("${winnerId}") {
-        case "0":
-            alert("Winner is ${name0}");
-            post();
-            break;
-        case "1":
-            alert("Winner is ${name1}");
-            post();
-            break;
-        case "2":
-            alert("Winner is ${name2}");
-            post();
-            break;
-        case "3":
-            alert("Winner is ${name3}");
-            post();
-            break;
-        default :
-            break;
+    if ("1" === "${isEnd}") {
+        alert("You lose!");
+        end();
     }
+    if ("2" === "${isEnd}") {
+        alert("You win!");
+        end();
+    }
+
     var isRolled = "${isRolled}";
     var myName = "${myName}";
     var myAnswering;
@@ -302,6 +291,16 @@
         opt.name = "name";
         opt.value = "${myName}";
         temp.appendChild(opt);
+        document.body.appendChild(temp);
+        temp.submit();
+        return temp;
+    }
+
+    function end() {
+        var temp = document.createElement("form");
+        temp.action = "end";
+        temp.method = "post";
+        temp.style.display = "none";
         document.body.appendChild(temp);
         temp.submit();
         return temp;

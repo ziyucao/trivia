@@ -21,19 +21,6 @@ public class GameController
     @RequestMapping(value = "/gameroom", method = RequestMethod.POST)
     public String GameController(ModelMap model, @RequestParam String name)
     {
-//        test
-//        model.addAttribute("name0", 11);
-//        model.addAttribute("name1", 22);
-//        model.addAttribute("name2", 33);
-//        model.addAttribute("name3", 44);
-//        model.addAttribute("coin0", 1);
-//        model.addAttribute("coin1", 1);
-//        model.addAttribute("coin2", 1);
-//        model.addAttribute("coin3", 1);
-//        model.addAttribute("myName", name);
-//        model.addAttribute("isAnswering", true);
-//        model.addAttribute("isPunished", false);
-//        return "gameroom";
         //如果房间人满
         if (updatePlayerInformationInTheGroup(model, name) == 4)
         {
@@ -92,7 +79,8 @@ public class GameController
         {
             updatePlayerInformationInTheGroup(model, name);
             GameService.clearWhenGameOver(pe);
-            model.addAttribute("winnerId", playerId);
+            // isEnd==2  ->  you win
+            model.addAttribute("isEnd", 2);
             return "gameroom";
         } else
         {
@@ -105,15 +93,23 @@ public class GameController
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String GameUpdateController(ModelMap model, @RequestParam String name)
+    public String gameUpdateController(ModelMap model, @RequestParam String name)
     {
         if (updatePlayerInformationInTheGroup(model, name) == 0)
         {
-            return "welcome";
+            // isEnd==1  ->  you lose
+            model.addAttribute("isEnd", 1);
         }
         return "gameroom";
-
     }
+
+    @RequestMapping(value = "/end", method = RequestMethod.POST)
+    public String gameEndController()
+    {
+        return "welcome";
+    }
+
+
     private int updatePlayerInformationInTheGroup(ModelMap model, String name)
     {
         PlayerEntity pe = PlayerDAO.getPlayer(name);
@@ -127,7 +123,6 @@ public class GameController
                 model.addAttribute("coin" + i, players.get(i).getCoins());
                 model.addAttribute("answering" + i, players.get(i).getIsAnswering());
                 model.addAttribute("punished" + i, players.get(i).getIsPunished());
-
             }
             model.addAttribute("myName", name);
             return players.size();
