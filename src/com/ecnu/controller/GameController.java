@@ -69,6 +69,7 @@ public class GameController
 
         model.addAttribute("dice", dice);
         model.addAttribute("isRolled", true);
+        model.addAttribute("questionId", questionId);
         updatePlayerInformationInTheGroup(model, name);
 
         return "gameroom";

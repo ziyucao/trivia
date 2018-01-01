@@ -13,6 +13,7 @@ public class GameService {
 
     private static final int QUESTION_SUM = 20;
     private static final int MAX_COINS = 6;
+
     public static int gameIsEnd(PlayerEntity pe)
     {
         ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);

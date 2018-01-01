@@ -100,34 +100,19 @@ public class PlayerService
      * return value > 0 : (game is end)the index of players in group
      * return value = -1 : game is not end
      */
-    public static int gameIsEnd(PlayerEntity pe)
-    {
-        ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
-        if (players != null)
-        {
-            for (int i = 0; i < players.size(); i++)
-            {
-                if (players.get(i) != null && players.get(i).getCoins() == 6)
-                {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
 
-    public static void updateState(PlayerEntity pe, int questionId, String answer)
-    {
-        if (pe != null)
-        {
-            boolean isAnswerCorrrect = QuestionDAO.checkAnswer(questionId, answer);
-            if (isAnswerCorrrect)
-            {
-                pe.setCoins(pe.getCoins() + 1);
-            } else
-            {
-                pe.setIsPunished(1);
-            }
-        }
-    }
+//    public static void updateState(PlayerEntity pe, int questionId, String answer)
+//    {
+//        if (pe != null)
+//        {
+//            boolean isAnswerCorrrect = QuestionDAO.checkAnswer(questionId, answer);
+//            if (isAnswerCorrrect)
+//            {
+//                pe.setCoins(pe.getCoins() + 1);
+//            } else
+//            {
+//                pe.setIsPunished(1);
+//            }
+//        }
+//    }
 }
