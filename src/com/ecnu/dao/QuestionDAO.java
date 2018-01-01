@@ -64,8 +64,8 @@ public class QuestionDAO {
         List result = q.list();
         if (result != null && result.size() != 0)
         {
-            QuestionEntity qe = (QuestionEntity) q.list().get(0);
-            if (answer.equals(qe.getAnswer()))
+            String questionAnswer = (String)q.list().get(0);
+            if (answer.equals(questionAnswer))
             {
                 re = true;
             }
