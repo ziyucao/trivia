@@ -216,6 +216,23 @@
         setIsAnswering("card4");
     }
 
+    if ("1" == "${punished0}") {
+        setIsPunished("card1");
+    }
+    if ("1" == "${punished1}") {
+        setIsPunished("card2");
+    }
+    if ("1" == "${punished2}") {
+        setIsPunished("card3");
+    }
+    if ("1" == "${punished3}") {
+        setIsPunished("card4");
+    }
+
+
+    function setIsPunished(Nid) {
+        $(Nid).setAttribute("style", "border-color: #e85600;box-shadow: 0 0 0 .12rem rgba(232, 86, 0, .2);");
+    }
 
     function setIsAnswering(Nid) {
         $(Nid).setAttribute("style", "border-color: #3634d2;box-shadow: 0 0 0 .12rem rgba(87, 85, 217, .2);");
