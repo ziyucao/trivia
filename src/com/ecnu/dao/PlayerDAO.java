@@ -31,7 +31,7 @@ public class PlayerDAO {
             Session s = DBConnection.getSession();
             Transaction t = s.beginTransaction();
 
-            Query q = s.createQuery("delete from AvailableGroupEntity where id = ?");
+            Query q = s.createQuery("delete from PlayerEntity where id = ?");
             q.setParameter(0, pe.getUserId());
             q.executeUpdate();
 

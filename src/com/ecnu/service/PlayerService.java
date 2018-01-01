@@ -53,13 +53,13 @@ public class PlayerService
 
                 if (cge.getPlayerSum() == 3)
                 {
-                    List<AvailableGroupEntity> al = s.createQuery("select id from AvailableGroupEntity ").list();
+                    List<Integer> al = s.createQuery("select id from AvailableGroupEntity ").list();
                     if (al == null || al.size() == 0)
                     {
                         cge.setId(cge.getId() + 1);
                     } else
                     {
-                        cge.setId(al.get(0).getId());
+                        cge.setId(al.get(0));
 
                         AvailableGroupDAO.deleteAvailableGroup(cge.getId());
                     }

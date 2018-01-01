@@ -81,7 +81,7 @@ public class GameController
         PlayerEntity pe = PlayerDAO.getPlayer(name);
         GameService.answering(pe, questionId, option);
         int playerId = GameService.gameIsEnd(pe);
-        if (playerId > 0)
+        if (playerId >= 0)
         {
             GameService.clearWhenGameOver(pe);
             model.addAttribute("winnerId", playerId);
@@ -96,6 +96,16 @@ public class GameController
         return "gameroom";
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String GameUpdateController(ModelMap model, @RequestParam String name)
+    {
+        if (updatePlayerInformationInTheGroup(model, name) == 0)
+        {
+            return "welcome";
+        }
+        return "gameroom";
+
+    }
     private int updatePlayerInformationInTheGroup(ModelMap model, String name)
     {
         PlayerEntity pe = PlayerDAO.getPlayer(name);

@@ -132,7 +132,6 @@
                             </form>
                         </div>
                     </div>
-                    <p>test</p>
                 </div>
                 <div class="column col-8 col-mx-auto" id="notAnswering">
                     <h3>等待其他玩家操作……</h3>
@@ -146,6 +145,22 @@
         return document.getElementById(Nid);
     }
 
+    switch ("${winnerId}") {
+        case "0":
+            alert("Winner is ${name0}");
+            break;
+        case "1":
+            alert("Winner is ${name1}");
+            break;
+        case "2":
+            alert("Winner is ${name2}");
+            break;
+        case "3":
+            alert("Winner is ${name3}");
+            break;
+        default :
+            break;
+    }
     var isRolled = "${isRolled}";
     var myName = "${myName}";
     var myAnswering;
@@ -166,6 +181,7 @@
         setMe("name3");
     }
     if (myAnswering !== "1") {
+        setInterval(post, 2000);
         $("answering").style.display = "none";
     } else {
         $("notAnswering").style.display = "none";
@@ -251,6 +267,20 @@
         temp.appendChild(opt1);
         temp.appendChild(opt2);
         temp.appendChild(opt3);
+        document.body.appendChild(temp);
+        temp.submit();
+        return temp;
+    }
+
+    function post() {
+        var temp = document.createElement("form");
+        temp.action = "update";
+        temp.method = "post";
+        temp.style.display = "none";
+        var opt = document.createElement("textarea");
+        opt.name = "name";
+        opt.value = "${myName}";
+        temp.appendChild(opt);
         document.body.appendChild(temp);
         temp.submit();
         return temp;
