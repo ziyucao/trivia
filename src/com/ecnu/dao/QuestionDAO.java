@@ -7,10 +7,15 @@ import org.hibernate.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionDAO {
+public final class QuestionDAO
+{
+
+    private QuestionDAO()
+    {
+    }
 
     /**
-     * @param index
+     * @param index : question index
      * @return question statement
      */
     public static String getQuestion(int index)
@@ -31,7 +36,7 @@ public class QuestionDAO {
     }
 
     /**
-     * @param index
+     * @param index : question index
      * @return question option statements
      */
     public static ArrayList<String> getOption(int index)

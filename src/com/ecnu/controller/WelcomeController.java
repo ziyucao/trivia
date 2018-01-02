@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class WelcomeController {
+
     @RequestMapping("/")
-    public String WelcomeController() {
+    public String welcomeController()
+    {
         return "welcome";
     }
 

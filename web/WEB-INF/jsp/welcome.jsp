@@ -31,7 +31,7 @@
         }
     </style>
 </head>
-
+<body>
 <header class="navbar bg-primary" style="padding:15px 0px">
     <section class="col-3 col-sm-1 col-md-2 col-lg-3">
     </section>

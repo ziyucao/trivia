@@ -9,21 +9,21 @@ import org.hibernate.cfg.Configuration;
  * @author hibernate
  */
 public class DBConnection {
-    private static final SessionFactory ourSessionFactory;
+    private static final SessionFactory SESSION_FACTORY;
 
     static {
         try {
             Configuration configuration = new Configuration();
             configuration.configure();
 
-            ourSessionFactory = configuration.buildSessionFactory();
+            SESSION_FACTORY = configuration.buildSessionFactory();
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
         }
     }
 
     public static Session getSession() throws HibernateException {
-        return ourSessionFactory.openSession();
+        return SESSION_FACTORY.openSession();
     }
 
 //    public static void main(final String[] args) throws Exception {

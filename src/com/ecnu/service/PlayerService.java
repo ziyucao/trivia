@@ -1,13 +1,11 @@
 package com.ecnu.service;
 
 import com.ecnu.dao.*;
-import com.ecnu.entities.AvailableGroupEntity;
 import com.ecnu.entities.CurrentGroupEntity;
 import com.ecnu.entities.PlayerEntity;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,7 +66,7 @@ public class PlayerService
                 {
                     cge.setPlayerSum(cge.getPlayerSum() + 1);
                 }
-                /**
+                /*
                  * update 不能修改主键
                  */
 //                Transaction t = s.beginTransaction();
@@ -96,7 +94,7 @@ public class PlayerService
         return result;
     }
 
-    /**
+    /*
      * return value > 0 : (game is end)the index of players in group
      * return value = -1 : game is not end
      */

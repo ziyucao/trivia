@@ -6,7 +6,12 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 
-public class AvailableGroupDAO {
+public final class AvailableGroupDAO
+{
+
+    private AvailableGroupDAO()
+    {
+    }
 
     public static void insertAvailableGroup(AvailableGroupEntity age)
     {

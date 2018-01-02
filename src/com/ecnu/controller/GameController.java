@@ -20,7 +20,7 @@ import java.util.List;
 public class GameController
 {
     @RequestMapping(value = "/gameroom", method = RequestMethod.POST)
-    public String GameController(ModelMap model, @RequestParam String name)
+    public String gameController(ModelMap model, @RequestParam String name)
     {
         //如果房间人满
         if (updatePlayerInformationInTheGroup(model, name) == 4)
