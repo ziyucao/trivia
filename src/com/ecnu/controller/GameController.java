@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author CaoZiyu
@@ -113,7 +114,7 @@ public class GameController
     private int updatePlayerInformationInTheGroup(ModelMap model, String name)
     {
         PlayerEntity pe = PlayerDAO.getPlayer(name);
-        ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
+        List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
 
         if (players != null && players.size() == 4)
         {

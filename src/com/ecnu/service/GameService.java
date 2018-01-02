@@ -6,17 +6,21 @@ import com.ecnu.dao.QuestionDAO;
 import com.ecnu.entities.AvailableGroupEntity;
 import com.ecnu.entities.PlayerEntity;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-public class GameService {
+/**
+ * @author Ding Donglai
+ */
+public class GameService
+{
 
     private static final int QUESTION_SUM = 20;
     private static final int MAX_COINS = 6;
 
     public static int gameIsEnd(PlayerEntity pe)
     {
-        ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
+        List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
         if (players != null)
         {
             for (int i = 0; i < players.size(); i++)
@@ -31,7 +35,6 @@ public class GameService {
     }
 
     /**
-     * @param pe
      * @return question id
      */
     public static int diceAndGetQuestion(PlayerEntity pe, int dice)
@@ -44,13 +47,11 @@ public class GameService {
                 {
                     pe.setIsPunished(0);
                     pe.setPosition((pe.getPosition() + dice) % QUESTION_SUM);
-                }
-                else
+                } else
                 {
                     pe.setIsAnswering(0);
                 }
-            }
-            else
+            } else
             {
                 pe.setPosition((pe.getPosition() + dice) % QUESTION_SUM);
             }
@@ -62,8 +63,7 @@ public class GameService {
                 return -1;
             }
             return pe.getPosition() + 1;
-        }
-        else
+        } else
         {
             return -1;
         }
@@ -77,8 +77,7 @@ public class GameService {
             if (isCorrect)
             {
                 pe.setCoins(pe.getCoins() + 1);
-            }
-            else
+            } else
             {
                 pe.setIsPunished(1);
             }
@@ -90,12 +89,12 @@ public class GameService {
 
     public static void clearWhenGameOver(PlayerEntity pe)
     {
-        ArrayList<PlayerEntity> players= PlayerDAO.getPlayersInGroup(pe);
+        List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
         if (players != null)
         {
-            for (int i = 0; i < players.size(); i++)
+            for (PlayerEntity player : players)
             {
-                PlayerDAO.deletePlayer(players.get(i));
+                PlayerDAO.deletePlayer(player);
             }
 
             int groupId = pe.getGroupId();
@@ -106,8 +105,8 @@ public class GameService {
 
     public static void nextPlayer(PlayerEntity pe)
     {
-        ArrayList<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
-        if (players !=  null)
+        List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
+        if (players != null)
         {
             int nextId = -1;
             for (int i = 0; i < players.size(); i++)
@@ -124,14 +123,6 @@ public class GameService {
                 nextPlayer.setIsAnswering(1);
                 PlayerDAO.updatePlayer(nextPlayer);
             }
-        }
-    }
-
-    public static void playerQuit(PlayerEntity pe)
-    {
-        if (pe != null)
-        {
-            PlayerDAO.deletePlayer(pe);
         }
     }
 

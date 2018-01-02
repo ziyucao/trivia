@@ -163,14 +163,17 @@ public class PlayerEntity {
      * 判断两个用户是否相等
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+        {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (obj == null || getClass() != obj.getClass())
+        {
             return false;
         }
-        PlayerEntity that = (PlayerEntity) o;
+        final PlayerEntity that = (PlayerEntity) obj;
         return Objects.equals(userId, that.userId) &&
                 Objects.equals(groupId, that.groupId) &&
                 Objects.equals(coins, that.coins) &&

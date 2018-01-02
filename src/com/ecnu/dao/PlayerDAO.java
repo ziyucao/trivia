@@ -1,7 +1,6 @@
 package com.ecnu.dao;
 
 import com.ecnu.entities.PlayerEntity;
-import com.ecnu.service.PlayerService;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -9,111 +8,112 @@ import org.hibernate.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerDAO {
+/**
+ * @author Ding Donglai
+ */
+public final class PlayerDAO
+{
 
-    public static void insertPlayer(PlayerEntity pe)
+    private PlayerDAO()
     {
-        Session s = DBConnection.getSession();
-        Transaction t = s.beginTransaction();
-        s.save(pe);
-        t.commit();
-        s.close();
     }
 
     /**
-     * delete by user_id
+     * @param playerEntity : player you want to insert
+     */
+    public static void insertPlayer(final PlayerEntity playerEntity)
+    {
+        final Session session = DBConnection.getSession();
+        final Transaction transaction = session.beginTransaction();
+        session.save(playerEntity);
+        transaction.commit();
+        session.close();
+    }
+
+    /**
+     * delete by playerEntity.userId
      *
-     * */
-    public static void deletePlayer(PlayerEntity pe)
+     * @param playerEntity : player you want to delete
+     */
+    public static void deletePlayer(final PlayerEntity playerEntity)
     {
-        if (pe != null)
+        if (playerEntity != null)
         {
-            Session s = DBConnection.getSession();
-            Transaction t = s.beginTransaction();
+            final Session session = DBConnection.getSession();
+            final Transaction transaction = session.beginTransaction();
 
-            Query q = s.createQuery("delete from PlayerEntity where id = ?");
-            q.setParameter(0, pe.getUserId());
-            q.executeUpdate();
+            final Query query = session.createQuery("delete from PlayerEntity where id = ?");
+            query.setParameter(0, playerEntity.getUserId());
+            query.executeUpdate();
 
-            t.commit();
-            s.close();
+            transaction.commit();
+            session.close();
         }
     }
 
-    public static void updatePlayer(PlayerEntity pe)
+    /**
+     * @param playerEntity : player you want to update
+     */
+    public static void updatePlayer(final PlayerEntity playerEntity)
     {
-        if (pe != null)
+        if (playerEntity != null)
         {
-            Session s = DBConnection.getSession();
-            Transaction t = s.beginTransaction();
+            final Session session = DBConnection.getSession();
+            final Transaction transaction = session.beginTransaction();
 
-            s.update(pe);
+            session.update(playerEntity);
 
-            t.commit();
-            s.close();
+            transaction.commit();
+            session.close();
         }
     }
 
-    public static PlayerEntity getPlayer(String id)
+    /**
+     * @param playerId : userId of Player who you want
+     */
+    public static PlayerEntity getPlayer(final String playerId)
     {
-        PlayerEntity pe = null;
+        PlayerEntity playerEntity = null;
 
-        Session s = DBConnection.getSession();
-        Query q = s.createQuery("from PlayerEntity where userId = ?");
-        q.setParameter(0, id);
-        List result = q.list();
+        final Session session = DBConnection.getSession();
+        final Query query = session.createQuery("from PlayerEntity where userId = ?");
+        query.setParameter(0, playerId);
+        final List result = query.list();
 
-        if (result != null && result.size() != 0) {
-            pe = (PlayerEntity) result.get(0);
+        if (result != null && !result.isEmpty())
+        {
+            playerEntity = (PlayerEntity) result.get(0);
         }
 
-        s.close();
-        return pe;
+        session.close();
+        return playerEntity;
     }
 
-    public static ArrayList<PlayerEntity> getPlayersInGroup(PlayerEntity pe)
+    /**
+     * @param playerEntity : the player in the group that you want
+     */
+    public static List<PlayerEntity> getPlayersInGroup(final PlayerEntity playerEntity)
     {
-        ArrayList<PlayerEntity> players = new ArrayList<>();
+        final List<PlayerEntity> players = new ArrayList<>();
 
-        Session s = DBConnection.getSession();
-        if (pe != null)
+        final Session session = DBConnection.getSession();
+        if (playerEntity != null)
         {
-            int groupId = pe.getGroupId();
-            Query q = s.createQuery("from PlayerEntity where groupId = ? order by idInGroup asc");
-            q.setParameter(0, groupId);
-            List result = q.list();
+            final int groupId = playerEntity.getGroupId();
+            final Query query = session.createQuery("from PlayerEntity where groupId = ? order by idInGroup asc");
+            query.setParameter(0, groupId);
+            final List result = query.list();
 
-            if (result != null && result.size() != 0)
+            if (result != null && !result.isEmpty())
             {
-                for (int i = 0; i < result.size(); i++)
+                for (final Object resultPlayer : result)
                 {
-                    players.add((PlayerEntity)result.get(i));
+                    players.add((PlayerEntity) resultPlayer);
                 }
             }
         }
-
-        s.close();
+        session.close();
         return players;
-    }
-
-    public static String getIdFromGroupByIdInGroup(PlayerEntity pe, int idInGroup)
-    {
-        if (pe != null)
-        {
-            ArrayList<PlayerEntity> players = getPlayersInGroup(pe);
-            if (players != null && players.size() != 0)
-            {
-                PlayerEntity target = null;
-                for (int i = 0; i < players.size(); i++)
-                {
-                    if (idInGroup == players.get(i).getIdInGroup())
-                    {
-                        return players.get(i).getUserId();
-                    }
-                }
-            }
-        }
-        return "";
     }
 
 }

@@ -5,12 +5,17 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-public class CurrentGroupDAO {
+public final class CurrentGroupDAO
+{
 
-    public static void insertCurrentGroup(CurrentGroupEntity cge)
+    private CurrentGroupDAO()
     {
-        Session s = DBConnection.getSession();
-        Transaction t = s.beginTransaction();
+    }
+
+    public static void insertCurrentGroup(final CurrentGroupEntity cge)
+    {
+        final Session s = DBConnection.getSession();
+        final Transaction t = s.beginTransaction();
 
         s.save(cge);
 
@@ -20,13 +25,13 @@ public class CurrentGroupDAO {
 
     /**
      * delete by group_id
-     *
-     * */
-    public static void deleteCurrentGroup(int groupId) {
-        Session s = DBConnection.getSession();
-        Transaction t = s.beginTransaction();
+     */
+    public static void deleteCurrentGroup(final int groupId)
+    {
+        final Session s = DBConnection.getSession();
+        final Transaction t = s.beginTransaction();
 
-        Query q = s.createQuery("delete from CurrentGroupEntity where id = ?");
+        final Query q = s.createQuery("delete from CurrentGroupEntity where id = ?");
         q.setParameter(0, groupId);
         q.executeUpdate();
 
