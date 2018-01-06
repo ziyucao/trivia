@@ -13,26 +13,27 @@ public final class AvailableGroupDAO
     {
     }
 
-    public static void insertAvailableGroup(AvailableGroupEntity age)
+    public static void insertAvailableGroup(final AvailableGroupEntity age)
     {
-        Session s = DBConnection.getSession();
-        Transaction t = s.beginTransaction();
+        final Session session = DBConnection.getSession();
+        final Transaction transaction = session.beginTransaction();
 
-        s.save(age);
+        session.save(age);
 
-        t.commit();
-        s.close();
+        transaction.commit();
+        session.close();
     }
 
-    public static void deleteAvailableGroup(int groupId) {
-        Session s = DBConnection.getSession();
-        Transaction t = s.beginTransaction();
+    public static void deleteAvailableGroup(final int groupId)
+    {
+        final Session session = DBConnection.getSession();
+        final Transaction transaction = session.beginTransaction();
 
-        Query q = s.createQuery("delete from AvailableGroupEntity where id = ?");
-        q.setParameter(0, groupId);
-        q.executeUpdate();
+        final Query query = session.createQuery("delete from AvailableGroupEntity where id = ?");
+        query.setParameter(0, groupId);
+        query.executeUpdate();
 
-        t.commit();
-        s.close();
+        transaction.commit();
+        session.close();
     }
 }

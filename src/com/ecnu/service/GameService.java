@@ -12,15 +12,19 @@ import java.util.Random;
 /**
  * @author Ding Donglai
  */
-public class GameService
+public final class GameService
 {
 
     private static final int QUESTION_SUM = 20;
     private static final int MAX_COINS = 6;
 
-    public static int gameIsEnd(PlayerEntity pe)
+    private GameService()
     {
-        List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
+    }
+
+    public static int gameIsEnd(final PlayerEntity playerEntity)
+    {
+        final List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(playerEntity);
         if (players != null)
         {
             for (int i = 0; i < players.size(); i++)
@@ -37,81 +41,81 @@ public class GameService
     /**
      * @return question id
      */
-    public static int diceAndGetQuestion(PlayerEntity pe, int dice)
+    public static int diceAndGetQuestion(final PlayerEntity playerEntity, final int dice)
     {
-        if (pe != null)
+        if (playerEntity != null)
         {
-            if (pe.getIsPunished() == 1)
+            if (playerEntity.getIsPunished() == 1)
             {
                 if (dice % 2 == 1)
                 {
-                    pe.setIsPunished(0);
-                    pe.setPosition((pe.getPosition() + dice) % QUESTION_SUM);
+                    playerEntity.setIsPunished(0);
+                    playerEntity.setPosition((playerEntity.getPosition() + dice) % QUESTION_SUM);
                 } else
                 {
-                    pe.setIsAnswering(0);
+                    playerEntity.setIsAnswering(0);
                 }
             } else
             {
-                pe.setPosition((pe.getPosition() + dice) % QUESTION_SUM);
+                playerEntity.setPosition((playerEntity.getPosition() + dice) % QUESTION_SUM);
             }
 
-            PlayerDAO.updatePlayer(pe);
+            PlayerDAO.updatePlayer(playerEntity);
 
-            if (pe.getIsPunished() == 1)
+            if (playerEntity.getIsPunished() == 1)
             {
                 return -1;
             }
-            return pe.getPosition() + 1;
+            return playerEntity.getPosition() + 1;
         } else
         {
             return -1;
         }
     }
 
-    public static void answering(PlayerEntity pe, int questionId, String option)
+    public static void answering(final PlayerEntity playerEntity, final int questionId, final String option)
     {
-        boolean isCorrect = QuestionDAO.checkAnswer(questionId, option);
-        if (pe != null)
+        final boolean isCorrect = QuestionDAO.checkAnswer(questionId, option);
+        if (playerEntity != null)
         {
             if (isCorrect)
             {
-                pe.setCoins(pe.getCoins() + 1);
+                playerEntity.setCoins(playerEntity.getCoins() + 1);
             } else
             {
-                pe.setIsPunished(1);
+                playerEntity.setIsPunished(1);
             }
-            pe.setIsAnswering(0);
+            playerEntity.setIsAnswering(0);
 
-            PlayerDAO.updatePlayer(pe);
+            PlayerDAO.updatePlayer(playerEntity);
         }
     }
 
-    public static void clearWhenGameOver(PlayerEntity pe)
+    public static void clearWhenGameOver(final PlayerEntity playerEntity)
     {
-        List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
+        final List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(playerEntity);
         if (players != null)
         {
-            for (PlayerEntity player : players)
+            for (final PlayerEntity player : players)
             {
                 PlayerDAO.deletePlayer(player);
             }
 
-            int groupId = pe.getGroupId();
+            final int groupId = playerEntity.getGroupId();
             AvailableGroupDAO.insertAvailableGroup(new AvailableGroupEntity(groupId));
 
         }
     }
 
-    public static void nextPlayer(PlayerEntity pe)
+    public static void nextPlayer(final PlayerEntity playerEntity)
     {
-        List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
+        final List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(playerEntity);
         if (players != null)
         {
             int nextId = -1;
             for (int i = 0; i < players.size(); i++)
             {
-                if (players.get(i).getUserId().equals(pe.getUserId()))
+                if (players.get(i).getUserId().equals(playerEntity.getUserId()))
                 {
                     nextId = i + 1 >= players.size() ? 0 : i + 1;
                 }
@@ -119,7 +123,7 @@ public class GameService
 
             if (nextId >= 0 && nextId < players.size())
             {
-                PlayerEntity nextPlayer = players.get(nextId);
+                final PlayerEntity nextPlayer = players.get(nextId);
                 nextPlayer.setIsAnswering(1);
                 PlayerDAO.updatePlayer(nextPlayer);
             }

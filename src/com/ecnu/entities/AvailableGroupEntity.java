@@ -8,40 +8,49 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "available_group", schema = "trivia")
-public class AvailableGroupEntity {
-    private int id;
+public class AvailableGroupEntity
+{
+    private int id;//NOPMD
 
-    public AvailableGroupEntity() {}
+    public AvailableGroupEntity()
+    {
+    }
 
-    public AvailableGroupEntity(int id)
+    public AvailableGroupEntity(final int id)//NOPMD
     {
         this.id = id;
     }
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id)//NOPMD
+    {//NOPMD
         this.id = id;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (obj == null || getClass() != obj.getClass())
+        {
             return false;
         }
-        AvailableGroupEntity that = (AvailableGroupEntity) o;
+        final AvailableGroupEntity that = (AvailableGroupEntity) obj;
         return id == that.id;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
 
         return Objects.hash(id);
     }

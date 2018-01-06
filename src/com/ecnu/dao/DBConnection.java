@@ -8,18 +8,23 @@ import org.hibernate.cfg.Configuration;
 /**
  * @author hibernate
  */
-public class DBConnection {
+public final class DBConnection
+{
     private static final SessionFactory SESSION_FACTORY;
 
     static {
         try {
-            Configuration configuration = new Configuration();
+            final Configuration configuration = new Configuration();
             configuration.configure();
 
             SESSION_FACTORY = configuration.buildSessionFactory();
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
         }
+    }
+
+    private DBConnection()
+    {
     }
 
     public static Session getSession() throws HibernateException {

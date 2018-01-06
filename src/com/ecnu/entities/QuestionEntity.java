@@ -6,7 +6,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "question", schema = "trivia")
 public class QuestionEntity {
-    private int id;
+    private int id;//NOPMD
     private String statement;
     private String optionA;
     private String optionB;
@@ -20,7 +20,8 @@ public class QuestionEntity {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id)
+    {//NOPMD
         this.id = id;
     }
 
@@ -30,7 +31,8 @@ public class QuestionEntity {
         return statement;
     }
 
-    public void setStatement(String statement) {
+    public void setStatement(final String statement)
+    {
         this.statement = statement;
     }
 
@@ -40,7 +42,8 @@ public class QuestionEntity {
         return optionA;
     }
 
-    public void setOptionA(String optionA) {
+    public void setOptionA(final String optionA)
+    {
         this.optionA = optionA;
     }
 
@@ -50,7 +53,8 @@ public class QuestionEntity {
         return optionB;
     }
 
-    public void setOptionB(String optionB) {
+    public void setOptionB(final String optionB)
+    {
         this.optionB = optionB;
     }
 
@@ -60,7 +64,8 @@ public class QuestionEntity {
         return optionC;
     }
 
-    public void setOptionC(String optionC) {
+    public void setOptionC(final String optionC)
+    {
         this.optionC = optionC;
     }
 
@@ -70,7 +75,8 @@ public class QuestionEntity {
         return optionD;
     }
 
-    public void setOptionD(String optionD) {
+    public void setOptionD(final String optionD)
+    {
         this.optionD = optionD;
     }
 
@@ -80,19 +86,23 @@ public class QuestionEntity {
         return answer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(final String answer)
+    {
         this.answer = answer;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (obj == null || getClass() != obj.getClass())
+        {
             return false;
         }
-        QuestionEntity that = (QuestionEntity) o;
+        final QuestionEntity that = (QuestionEntity) obj;
         return id == that.id &&
                 Objects.equals(statement, that.statement) &&
                 Objects.equals(optionA, that.optionA) &&

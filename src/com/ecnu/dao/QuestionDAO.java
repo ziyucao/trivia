@@ -18,20 +18,20 @@ public final class QuestionDAO
      * @param index : question index
      * @return question statement
      */
-    public static String getQuestion(int index)
+    public static String getQuestion(final int index)
     {
         String questionInfo = null;
 
-        Session s = DBConnection.getSession();
-        Query q = s.createQuery("select statement from QuestionEntity where id = ?");
-        q.setParameter(0, index);
-        List result = q.list();
-        if (result != null && result.size() != 0)
+        final Session session = DBConnection.getSession();
+        final Query query = session.createQuery("select statement from QuestionEntity where id = ?");
+        query.setParameter(0, index);
+        final List result = query.list();
+        if (result != null && !result.isEmpty())
         {
             questionInfo = (String)result.get(0);
         }
 
-        s.close();
+        session.close();
         return questionInfo;
     }
 
@@ -39,44 +39,43 @@ public final class QuestionDAO
      * @param index : question index
      * @return question option statements
      */
-    public static ArrayList<String> getOption(int index)
+    public static List<String> getOption(final int index)
     {
-        ArrayList<String> options = new ArrayList<>();
+        final List<String> options = new ArrayList<>();
 
-        Session s = DBConnection.getSession();
-        Query q = s.createQuery("from QuestionEntity where id = ?");
-        q.setParameter(0, index);
-        if (q.list() != null && q.list().size() != 0)
+        final Session session = DBConnection.getSession();
+        final Query query = session.createQuery("from QuestionEntity where id = ?");
+        query.setParameter(0, index);
+        if (query.list() != null && query.list().size() != 0)
         {
-            QuestionEntity qe = (QuestionEntity) q.list().get(0);
-            options.add(qe.getOptionA());
-            options.add(qe.getOptionB());
-            options.add(qe.getOptionC());
-            options.add(qe.getOptionD());
+            final QuestionEntity questionEntity = (QuestionEntity) query.list().get(0);
+            options.add(questionEntity.getOptionA());
+            options.add(questionEntity.getOptionB());
+            options.add(questionEntity.getOptionC());
+            options.add(questionEntity.getOptionD());
         }
 
-        s.close();
+        session.close();
         return options;
     }
 
-    public static boolean checkAnswer(int index, String answer)
+    public static boolean checkAnswer(final int index, final String answer)
     {
-        System.out.println(answer);
         boolean re = false;
-        Session s = DBConnection.getSession();
-        Query q = s.createQuery("select answer from QuestionEntity where id = ?");
-        q.setParameter(0, index);
-        List result = q.list();
-        if (result != null && result.size() != 0)
+        final Session session = DBConnection.getSession();
+        final Query query = session.createQuery("select answer from QuestionEntity where id = ?");
+        query.setParameter(0, index);
+        final List result = query.list();
+        if (result != null && !result.isEmpty())
         {
-            String questionAnswer = (String)q.list().get(0);
+            final String questionAnswer = (String) query.list().get(0);
             if (answer.equals(questionAnswer))
             {
                 re = true;
             }
         }
 
-        s.close();
+        session.close();
         return re;
     }
 }

@@ -18,11 +18,12 @@ public class WelcomeController {
     }
 
     @RequestMapping(value = "/waitingroom", method = RequestMethod.POST)
-    public String login(ModelMap model, @RequestParam String name) {
+    public String login(final ModelMap model, @RequestParam final String name)
+    {
         String redirect;
-        PlayerEntity pe = new PlayerEntity();
-        pe.setUserId(name);
-        if (PlayerService.login(pe))
+        final PlayerEntity playerEntity = new PlayerEntity();
+        playerEntity.setUserId(name);
+        if (PlayerService.login(playerEntity))
         {
             redirect = "waitingroom";
             model.addAttribute("name", name);

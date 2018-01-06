@@ -75,7 +75,8 @@ public class PlayerEntity {
     /**
      * 设置用户ID
      */
-    public void setUserId(String userId) {
+    public void setUserId(final String userId)
+    {
         this.userId = userId;
     }
 
@@ -91,7 +92,8 @@ public class PlayerEntity {
     /**
      * 设置用户所在房间的ID
      */
-    public void setGroupId(Integer groupId) {
+    public void setGroupId(final Integer groupId)
+    {
         this.groupId = groupId;
     }
 
@@ -107,7 +109,8 @@ public class PlayerEntity {
     /**
      * 设置用户金币数量
      */
-    public void setCoins(Integer coins) {
+    public void setCoins(final Integer coins)
+    {
         this.coins = coins;
     }
 
@@ -123,7 +126,8 @@ public class PlayerEntity {
     /**
      * 设置骰子所在棋盘的位置
      */
-    public void setPosition(Integer position) {
+    public void setPosition(final Integer position)
+    {
         this.position = position;
     }
 
@@ -139,7 +143,8 @@ public class PlayerEntity {
     /**
      * 设置用户是否正在回答问题
      */
-    public void setIsAnswering(Integer isAnswering) {
+    public void setIsAnswering(final Integer isAnswering)
+    {
         this.isAnswering = isAnswering;
     }
 
@@ -155,7 +160,8 @@ public class PlayerEntity {
     /**
      * 设置用户在房间中的序号
      */
-    public void setIdInGroup(Integer idInGroup) {
+    public void setIdInGroup(final Integer idInGroup)
+    {
         this.idInGroup = idInGroup;
     }
 
@@ -163,7 +169,7 @@ public class PlayerEntity {
      * 判断两个用户是否相等
      */
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         if (this == obj)
         {
@@ -195,7 +201,8 @@ public class PlayerEntity {
         return isPunished;
     }
 
-    public void setIsPunished(Integer isPunished) {
+    public void setIsPunished(final Integer isPunished)
+    {
         this.isPunished = isPunished;
     }
 }

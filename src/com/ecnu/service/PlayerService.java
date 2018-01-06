@@ -11,60 +11,64 @@ import java.util.List;
 /**
  * @author Ding Donglai
  */
-public class PlayerService
+public final class PlayerService
 {
 
-    public static boolean login(PlayerEntity pe)
+    private PlayerService()
+    {
+    }
+
+    public static boolean login(final PlayerEntity playerEntity)
     {
         boolean result = true;
-        Session s = DBConnection.getSession();
+        final Session session = DBConnection.getSession();
 
-        pe.setCoins(0);
-        pe.setPosition(0);
-        pe.setIsAnswering(0);
-        pe.setIsPunished(0);
+        playerEntity.setCoins(0);
+        playerEntity.setPosition(0);
+        playerEntity.setIsAnswering(0);
+        playerEntity.setIsPunished(0);
 
-        String hql = "select userId from PlayerEntity where userId = ?";
-        Query q = s.createQuery(hql);
-        q.setParameter(0, pe.getUserId());
-        List l = q.list();
+        final String hql = "select userId from PlayerEntity where userId = ?";
+        final Query query = session.createQuery(hql);
+        query.setParameter(0, playerEntity.getUserId());
+        final List list = query.list();
 
-        if (l == null || l.size() == 0)
+        if (list == null || list.isEmpty())
         {
 
-            List<CurrentGroupEntity> cg = s.createQuery("from CurrentGroupEntity").list();
-            CurrentGroupEntity cge = null;
-            if (cg == null || cg.size() == 0)
+            final List<CurrentGroupEntity> currentGEntities = session.createQuery("from CurrentGroupEntity").list();
+            CurrentGroupEntity currentGEntity = null;
+            if (currentGEntities == null || currentGEntities.isEmpty())
             {
-                cge = new CurrentGroupEntity();
-                cge.setId(1);
-                cge.setPlayerSum(1);
-                pe.setGroupId(1);
-                pe.setIdInGroup(1);
-                s.save(cge);
+                currentGEntity = new CurrentGroupEntity();
+                currentGEntity.setId(1);
+                currentGEntity.setPlayerSum(1);
+                playerEntity.setGroupId(1);
+                playerEntity.setIdInGroup(1);
+                session.save(currentGEntity);
             } else
             {
-                cge = cg.get(0);
-                int oldId = cge.getId();
-                pe.setGroupId(cge.getId());
-                pe.setIdInGroup(cge.getPlayerSum() + 1);
+                currentGEntity = currentGEntities.get(0);
+                final int oldId = currentGEntity.getId();
+                playerEntity.setGroupId(currentGEntity.getId());
+                playerEntity.setIdInGroup(currentGEntity.getPlayerSum() + 1);
 
-                if (cge.getPlayerSum() == 3)
+                if (currentGEntity.getPlayerSum() == 3)
                 {
-                    List<Integer> al = s.createQuery("select id from AvailableGroupEntity ").list();
-                    if (al == null || al.size() == 0)
+                    final List<Integer> aGEntities = session.createQuery("select id from AvailableGroupEntity ").list();
+                    if (aGEntities == null || aGEntities.isEmpty())
                     {
-                        cge.setId(cge.getId() + 1);
+                        currentGEntity.setId(currentGEntity.getId() + 1);
                     } else
                     {
-                        cge.setId(al.get(0));
+                        currentGEntity.setId(aGEntities.get(0));
 
-                        AvailableGroupDAO.deleteAvailableGroup(cge.getId());
+                        AvailableGroupDAO.deleteAvailableGroup(currentGEntity.getId());
                     }
-                    cge.setPlayerSum(0);
+                    currentGEntity.setPlayerSum(0);
                 } else
                 {
-                    cge.setPlayerSum(cge.getPlayerSum() + 1);
+                    currentGEntity.setPlayerSum(currentGEntity.getPlayerSum() + 1);
                 }
                 /*
                  * update 不能修改主键
@@ -80,17 +84,17 @@ public class PlayerService
 
                 CurrentGroupDAO.deleteCurrentGroup(oldId);
             }
-            CurrentGroupDAO.insertCurrentGroup(cge);
-            if (pe.getIdInGroup() == 1)
+            CurrentGroupDAO.insertCurrentGroup(currentGEntity);
+            if (playerEntity.getIdInGroup() == 1)
             {
-                pe.setIsAnswering(1);
+                playerEntity.setIsAnswering(1);
             }
-            PlayerDAO.insertPlayer(pe);
+            PlayerDAO.insertPlayer(playerEntity);
         } else
         {
             result = false;
         }
-        s.close();
+        session.close();
         return result;
     }
 

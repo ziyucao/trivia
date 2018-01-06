@@ -19,102 +19,105 @@ import java.util.List;
 @Controller
 public class GameController
 {
+    public static final String WAITING_ROOM_PAGE = "waitingroom";
+    public static final String GAME_ROOM_PAGE = "gameroom";
+    public static final String WELCOME_PAGE = "welcome";
+
+
     @RequestMapping(value = "/gameroom", method = RequestMethod.POST)
-    public String gameController(ModelMap model, @RequestParam String name)
+    public String gameController(final ModelMap model, @RequestParam final String name)
     {
+        String redirect = WAITING_ROOM_PAGE;
         //如果房间人满
         if (updatePlayerInformationInTheGroup(model, name) == 4)
         {
-            return "gameroom";
+            redirect = GAME_ROOM_PAGE;
         }
         //否则
         else
         {
             model.addAttribute("name", name);
-            return "waitingroom";
         }
+        return redirect;
     }
 
     @RequestMapping(value = "/rolling", method = RequestMethod.POST)
-    public String rolling(ModelMap model, @RequestParam String name)
+    public String rolling(final ModelMap model, @RequestParam final String name)
     {
-        int dice = GameService.dicing();
-        System.out.println(dice + " " + name);
-        PlayerEntity pe = PlayerDAO.getPlayer(name);
-        int questionId = GameService.diceAndGetQuestion(pe, dice);
+        final int dice = GameService.dicing();
+        final PlayerEntity playerEntity = PlayerDAO.getPlayer(name);
+        final int questionId = GameService.diceAndGetQuestion(playerEntity, dice);
         if (questionId < 0)
         {
-            GameService.nextPlayer(pe);
+            GameService.nextPlayer(playerEntity);
             updatePlayerInformationInTheGroup(model, name);
-            return "gameroom";
-        }
-        String questionStatement = QuestionDAO.getQuestion(questionId);
-        ArrayList<String> options = QuestionDAO.getOption(questionId);
-        if (questionStatement != null)
+        } else
         {
-            model.addAttribute("question", questionStatement);
-        }
-        if (options != null && options.size() == 4)
-        {
-            model.addAttribute("optionA", options.get(0));
-            model.addAttribute("optionB", options.get(1));
-            model.addAttribute("optionC", options.get(2));
-            model.addAttribute("optionD", options.get(3));
+            final String questionStatement = QuestionDAO.getQuestion(questionId);
+            final List<String> options = QuestionDAO.getOption(questionId);
+            if (questionStatement != null)
+            {
+                model.addAttribute("question", questionStatement);
+            }
+            if (options != null && options.size() == 4)
+            {
+                model.addAttribute("optionA", options.get(0));
+                model.addAttribute("optionB", options.get(1));
+                model.addAttribute("optionC", options.get(2));
+                model.addAttribute("optionD", options.get(3));
+            }
+
+            model.addAttribute("dice", dice);
+            model.addAttribute("isRolled", 1);
+            model.addAttribute("questionId", questionId);
+            updatePlayerInformationInTheGroup(model, name);
         }
 
-        model.addAttribute("dice", dice);
-        model.addAttribute("isRolled", 1);
-        model.addAttribute("questionId", questionId);
-        updatePlayerInformationInTheGroup(model, name);
-
-        return "gameroom";
+        return GAME_ROOM_PAGE;
     }
 
     @RequestMapping(value = "/answer", method = RequestMethod.POST)
-    public String answerQuestion(ModelMap model, @RequestParam String name, @RequestParam int questionId, @RequestParam String option)
+    public String answerQuestion(final ModelMap model, @RequestParam final String name, @RequestParam final int questionId, @RequestParam final String option)
     {
-        PlayerEntity pe = PlayerDAO.getPlayer(name);
-        GameService.answering(pe, questionId, option);
-        int playerId = GameService.gameIsEnd(pe);
+        final PlayerEntity playerEntity = PlayerDAO.getPlayer(name);
+        GameService.answering(playerEntity, questionId, option);
+        final int playerId = GameService.gameIsEnd(playerEntity);
         if (playerId >= 0)
         {
             updatePlayerInformationInTheGroup(model, name);
-            GameService.clearWhenGameOver(pe);
+            GameService.clearWhenGameOver(playerEntity);
             // isEnd==2  ->  you win
             model.addAttribute("isEnd", 2);
-            return "gameroom";
         } else
         {
-            GameService.nextPlayer(pe);
+            GameService.nextPlayer(playerEntity);
+            updatePlayerInformationInTheGroup(model, name);
         }
-
-        updatePlayerInformationInTheGroup(model, name);
-
-        return "gameroom";
+        return GAME_ROOM_PAGE;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String gameUpdateController(ModelMap model, @RequestParam String name)
+    public String gameUpdateController(final ModelMap model, @RequestParam final String name)
     {
         if (updatePlayerInformationInTheGroup(model, name) == 0)
         {
             // isEnd==1  ->  you lose
             model.addAttribute("isEnd", 1);
         }
-        return "gameroom";
+        return GAME_ROOM_PAGE;
     }
 
     @RequestMapping(value = "/end", method = RequestMethod.POST)
     public String gameEndController()
     {
-        return "welcome";
+        return WELCOME_PAGE;
     }
 
 
-    private int updatePlayerInformationInTheGroup(ModelMap model, String name)
+    private int updatePlayerInformationInTheGroup(final ModelMap model, final String name)
     {
-        PlayerEntity pe = PlayerDAO.getPlayer(name);
-        List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(pe);
+        final PlayerEntity playerEntity = PlayerDAO.getPlayer(name);
+        final List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(playerEntity);
 
         if (players != null && players.size() == 4)
         {

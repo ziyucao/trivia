@@ -6,7 +6,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "current_group", schema = "trivia")
 public class CurrentGroupEntity {
-    private int id;
+    private int id;//NOPMD
     private Integer playerSum;
 
     @Id
@@ -15,7 +15,8 @@ public class CurrentGroupEntity {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id)
+    {//NOPMD
         this.id = id;
     }
 
@@ -25,19 +26,23 @@ public class CurrentGroupEntity {
         return playerSum;
     }
 
-    public void setPlayerSum(Integer playerSum) {
+    public void setPlayerSum(final Integer playerSum)
+    {
         this.playerSum = playerSum;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(final Object obj)
+    {
+        if (this == obj)
+        {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (obj == null || getClass() != obj.getClass())
+        {
             return false;
         }
-        CurrentGroupEntity that = (CurrentGroupEntity) o;
+        final CurrentGroupEntity that = (CurrentGroupEntity) obj;
         return id == that.id &&
                 Objects.equals(playerSum, that.playerSum);
     }

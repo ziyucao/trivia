@@ -14,13 +14,13 @@ public final class CurrentGroupDAO
 
     public static void insertCurrentGroup(final CurrentGroupEntity cge)
     {
-        final Session s = DBConnection.getSession();
-        final Transaction t = s.beginTransaction();
+        final Session session = DBConnection.getSession();
+        final Transaction transaction = session.beginTransaction();
 
-        s.save(cge);
+        session.save(cge);
 
-        t.commit();
-        s.close();
+        transaction.commit();
+        session.close();
     }
 
     /**
@@ -28,14 +28,14 @@ public final class CurrentGroupDAO
      */
     public static void deleteCurrentGroup(final int groupId)
     {
-        final Session s = DBConnection.getSession();
-        final Transaction t = s.beginTransaction();
+        final Session session = DBConnection.getSession();
+        final Transaction transaction = session.beginTransaction();
 
-        final Query q = s.createQuery("delete from CurrentGroupEntity where id = ?");
-        q.setParameter(0, groupId);
-        q.executeUpdate();
+        final Query query = session.createQuery("delete from CurrentGroupEntity where id = ?");
+        query.setParameter(0, groupId);
+        query.executeUpdate();
 
-        t.commit();
-        s.close();
+        transaction.commit();
+        session.close();
     }
 }
