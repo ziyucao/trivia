@@ -116,22 +116,7 @@ public class GameController
 
     private int updatePlayerInformationInTheGroup(final ModelMap model, final String name)
     {
-        final PlayerEntity playerEntity = PlayerDAO.getPlayer(name);
-        final List<PlayerEntity> players = PlayerDAO.getPlayersInGroup(playerEntity);
-
-        if (players != null && players.size() == 4)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                model.addAttribute("name" + i, players.get(i).getUserId());
-                model.addAttribute("coin" + i, players.get(i).getCoins());
-                model.addAttribute("answering" + i, players.get(i).getIsAnswering());
-                model.addAttribute("punished" + i, players.get(i).getIsPunished());
-            }
-            model.addAttribute("myName", name);
-            return players.size();
-        }
-        return 0;
+        return GameService.updatePlayerInformationInTheGroup(model, name);
     }
 
 }
