@@ -19,6 +19,11 @@ public class PlayerDAOTest
     @After
     public void tearDown()
     {
+        PlayerEntity playerEntity = new PlayerEntity();
+        playerEntity.setUserId("test_insert_and_get");
+        PlayerDAO.deletePlayer(playerEntity);
+        playerEntity.setUserId("test_update_and_get");
+        PlayerDAO.deletePlayer(playerEntity);
     }
 
     @Test

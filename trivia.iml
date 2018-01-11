@@ -39,7 +39,7 @@
         <naming-strategy-map>
           <unit-entry name="web:WEB-INF:classes:hibernate.cfg.xml" />
         </naming-strategy-map>
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/web/WEB-INF/classes/hibernate.cfg.xml" />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/hibernate.cfg.xml" />
       </configuration>
     </facet>
   </component>
