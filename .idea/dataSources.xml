@@ -5,7 +5,7 @@
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://47.100.48.96:3306</jdbc-url>
+      <jdbc-url>jdbc:mysql://47.100.48.96:3306/trivia</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
@@ -15,7 +15,7 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="web:WEB-INF:classes:hibernate.cfg.xml/Hibernate" uuid="56c0945a-56fd-479b-8332-8d08457bb598">
+    <data-source source="LOCAL" name="src:hibernate.cfg.xml/Hibernate" uuid="56c0945a-56fd-479b-8332-8d08457bb598">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>

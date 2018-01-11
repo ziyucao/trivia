@@ -16,8 +16,8 @@ import java.util.Random;
 public final class GameService
 {
 
-    private static final int QUESTION_SUM = 20;
-    private static final int MAX_COINS = 6;
+    public static final int QUESTION_SUM = 20;
+    public static final int MAX_COINS = 6;
 
     private GameService()
     {
@@ -104,7 +104,6 @@ public final class GameService
 
             final int groupId = playerEntity.getGroupId();
             AvailableGroupDAO.insertAvailableGroup(new AvailableGroupEntity(groupId));
-
         }
     }
 

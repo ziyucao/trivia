@@ -55,7 +55,7 @@ public final class PlayerService
 
                 if (currentGEntity.getPlayerSum() == 3)
                 {
-                    final List<Integer> aGEntities = session.createQuery("select id from AvailableGroupEntity ").list();
+                    final List<Integer> aGEntities = session.createQuery("select id from AvailableGroupEntity").list();
                     if (aGEntities == null || aGEntities.isEmpty())
                     {
                         currentGEntity.setId(currentGEntity.getId() + 1);
@@ -70,18 +70,6 @@ public final class PlayerService
                 {
                     currentGEntity.setPlayerSum(currentGEntity.getPlayerSum() + 1);
                 }
-                /*
-                 * update 不能修改主键
-                 */
-//                Transaction t = s.beginTransaction();
-//                hql = "update CurrentGroupEntity as c set id = ?, playerSum = ? where id = ?";
-//                q = s.createQuery(hql);
-//                q.setParameter(0, oldId);
-//                q.setParameter(1, cge.getId());
-//                q.setParameter(2, cge.getPlayerSum());
-//                q.executeUpdate();
-//                t.commit();
-
                 CurrentGroupDAO.deleteCurrentGroup(oldId);
             }
             CurrentGroupDAO.insertCurrentGroup(currentGEntity);
@@ -97,24 +85,4 @@ public final class PlayerService
         session.close();
         return result;
     }
-
-    /*
-     * return value > 0 : (game is end)the index of players in group
-     * return value = -1 : game is not end
-     */
-
-//    public static void updateState(PlayerEntity pe, int questionId, String answer)
-//    {
-//        if (pe != null)
-//        {
-//            boolean isAnswerCorrrect = QuestionDAO.checkAnswer(questionId, answer);
-//            if (isAnswerCorrrect)
-//            {
-//                pe.setCoins(pe.getCoins() + 1);
-//            } else
-//            {
-//                pe.setIsPunished(1);
-//            }
-//        }
-//    }
 }
