@@ -14,7 +14,7 @@ public final class DBConnection
 
     static {
         try {
-            final Configuration configuration = new Configuration();
+            Configuration configuration = new Configuration();
             configuration.configure();
 
             SESSION_FACTORY = configuration.buildSessionFactory();
@@ -31,21 +31,4 @@ public final class DBConnection
         return SESSION_FACTORY.openSession();
     }
 
-//    public static void main(final String[] args) throws Exception {
-//        final Session session = getSession();
-//        try {
-//            System.out.println("querying all the managed entities...");
-//            final Metamodel metamodel = session.getSessionFactory().getMetamodel();
-//            for (EntityType<?> entityType : metamodel.getEntities()) {
-//                final String entityName = entityType.getName();
-//                final Query query = session.createQuery("from " + entityName);
-//                System.out.println("executing: " + query.getQueryString());
-//                for (Object o : query.list()) {
-//                    System.out.println("  " + o);
-//                }
-//            }
-//        } finally {
-//            session.close();
-//        }
-//    }
 }
