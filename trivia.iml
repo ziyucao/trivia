@@ -34,7 +34,6 @@
       <configuration>
         <datasource-map>
           <unit-entry name="hibernate.cfg.xml" value="0b781376-ceda-43e7-a464-5685ec609696" />
-          <unit-entry name="web:WEB-INF:classes:hibernate.cfg.xml" value="fecffe8a-89ed-430a-8feb-983f4f322651" />
         </datasource-map>
         <naming-strategy-map>
           <unit-entry name="web:WEB-INF:classes:hibernate.cfg.xml" />

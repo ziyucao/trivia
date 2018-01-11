@@ -155,4 +155,5 @@ public final class GameService
     {
         return new Random().nextInt(6) + 1;
     }
+
 }

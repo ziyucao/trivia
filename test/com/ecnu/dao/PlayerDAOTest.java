@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.*;
+
 import static org.junit.Assert.*;
 
 public class PlayerDAOTest
@@ -24,6 +26,12 @@ public class PlayerDAOTest
         PlayerDAO.deletePlayer(playerEntity);
         playerEntity.setUserId("test_update_and_get");
         PlayerDAO.deletePlayer(playerEntity);
+        for (int i = 0; i < 4; i++)
+        {
+            PlayerEntity pe = new PlayerEntity();
+            pe.setUserId("testPlayer" + i);
+            PlayerDAO.deletePlayer(pe);
+        }
     }
 
     @Test
@@ -38,7 +46,7 @@ public class PlayerDAOTest
         playerEntity.setGroupId(8);
         playerEntity.setIdInGroup(1);
         PlayerDAO.insertPlayer(playerEntity);
-        Assert.assertEquals(PlayerDAO.getPlayer("test_insert_and_get"), playerEntity);
+        Assert.assertEquals(playerEntity, PlayerDAO.getPlayer("test_insert_and_get"));
     }
 
     @Test
@@ -56,7 +64,25 @@ public class PlayerDAOTest
         playerEntity.setCoins(100);
         PlayerDAO.updatePlayer(playerEntity);
         int coins = PlayerDAO.getPlayer("test_update_and_get").getCoins();
-        Assert.assertEquals(coins, 100);
+        Assert.assertEquals(100, coins);
+    }
+
+    @Test
+    public void test_get_player_in_group()
+    {
+        List<PlayerEntity> players = new ArrayList<>();
+        for (int i = 0; i < 4; i++)
+        {
+            PlayerEntity playerEntity = new PlayerEntity();
+            playerEntity.setUserId("testPlayer" + i);
+            playerEntity.setGroupId(888);
+            playerEntity.setIdInGroup(i);
+            PlayerDAO.insertPlayer(playerEntity);
+            players.add(playerEntity);
+        }
+        PlayerEntity playerEntity = new PlayerEntity();
+        playerEntity.setGroupId(888);
+        Assert.assertEquals(players, PlayerDAO.getPlayersInGroup(playerEntity));
     }
 
 }
