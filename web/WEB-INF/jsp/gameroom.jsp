@@ -35,6 +35,20 @@
             height: 100%;
             align-items: center; /*指定垂直居中*/
         }
+
+        .count_down_10 {
+            width: 100%;
+            transition: width 10s linear;
+            -moz-transition: width 10s linear;
+            -webkit-transition: width 10s linear;
+        }
+
+        .count_down_25 {
+            width: 100%;
+            transition: width 25s linear;
+            -moz-transition: width 25s linear;
+            -webkit-transition: width 25s linear;
+        }
     </style>
 </head>
 
@@ -86,50 +100,46 @@
         <div class="card">
             <div class="centerParent">
                 <div class="column col-8 col-mx-auto" id="answering">
-                    <button class="btn" id="rolling-btn" onClick="rolling()">Rolling</button>
+                    <button class="btn" style="margin-bottom: 1.5rem" id="rolling-btn" onClick="rolling()">Rolling
+                    </button>
                     <div id="question-sheet">
                         <h4 id="question-statement"></h4>
                         <div>
                             <form action="answer" method="post">
                                 <div class="columns">
-                                    <div class="col-6" style="padding:0 1rem">
-                                        <div class="card" onclick="postAnswer('a')">
-                                            <label class="form-radio">
-                                                <input type="radio" name="answer">
-                                                <i class="form-icon"></i>
-                                                <p id="option-a">A.</p>
-                                            </label>
+                                    <div class="col-6" style="padding:0.5rem 1rem">
+                                        <div class="btn btn-lg" style="width: 100%" name="answer" id="option-a"
+                                             onclick="postAnswer('a')">
+
                                         </div>
                                     </div>
-                                    <div class="col-6" style="padding:0 1rem">
-                                        <div class="card" onclick="postAnswer('b')">
-                                            <label class="form-radio">
-                                                <input type="radio" name="answer">
-                                                <i class="form-icon"></i>
-                                                <p id="option-b">B.</p>
-                                            </label>
+                                    <div class="col-6" style="padding:0.5rem 1rem">
+                                        <div class="btn btn-lg" style="width: 100%" name="answer" id="option-b"
+                                             onclick="postAnswer('b')">
+
                                         </div>
                                     </div>
-                                    <div class="col-6" style="padding:0 1rem">
-                                        <div class="card" onclick="postAnswer('c')">
-                                            <label class="form-radio">
-                                                <input type="radio" name="answer">
-                                                <i class="form-icon"></i>
-                                                <p id="option-c">C.</p>
-                                            </label>
+                                    <div class="col-6" style="padding:0.5rem 1rem">
+                                        <div class="btn btn-lg" style="width: 100%" name="answer" id="option-c"
+                                             onclick="postAnswer('c')">
+
                                         </div>
                                     </div>
-                                    <div class="col-6" style="padding:0 1rem">
-                                        <div class="card" onclick="postAnswer('d')">
-                                            <label class="form-radio">
-                                                <input type="radio" name="answer">
-                                                <i class="form-icon"></i>
-                                                <p id="option-d">D.</p>
-                                            </label>
+                                    <div class="col-6" style="padding:0.5rem 1rem">
+                                        <div class="btn btn-lg" style="width: 100%" name="answer" id="option-d"
+                                             onclick="postAnswer('d')">
+
                                         </div>
                                     </div>
                                 </div>
                             </form>
+                        </div>
+
+                    </div>
+                    <div class="column col-12 col-mx-auto" style="width:99%">
+                        <div class="bar bar-sm">
+                            <div id="count-down" class="bar-item count_down_10" role="progressbar" style="width:0"
+                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
@@ -153,6 +163,11 @@
         alert("You win!");
         end();
     }
+
+    $("name0").innerText = "${name0}";
+    $("name1").innerText = "${name1}";
+    $("name2").innerText = "${name2}";
+    $("name3").innerText = "${name3}";
 
     var isRolled = "${isRolled}";
     var myName = "${myName}";
@@ -179,66 +194,91 @@
     } else {
         $("notAnswering").style.display = "none";
         if (isRolled === "1") {
+            $("count-down").setAttribute("class", "bar-item count_down_25");
+            var t0 = window.setTimeout(countDown, 100);
+            var t1 = window.setTimeout(timeout, 25000);
             $("rolling-btn").style.display = "none";
             getQuestionSheet();
         } else {
+            var t2 = window.setTimeout(countDown, 100);
+            var t3 = window.setTimeout(rolling, 10000);
             $("rolling-btn").style.display = "inline";
             $("question-sheet").style.display = "none";
         }
     }
 
+    function countDown() {
+        $("count-down").style.width = "100%"
+    }
+
 
     function getQuestionSheet() {
-        $("question-statement").innerText = "${question}";
+        $("question-statement").innerText = "Q:${question}";
         $("option-a").innerText = "A." + "${optionA}";
         $("option-b").innerText = "B." + "${optionB}";
         $("option-c").innerText = "C." + "${optionC}";
         $("option-d").innerText = "D." + "${optionD}";
     }
 
-    if ("1" == "${answering0}") {
-        setIsAnswering("card1");
+    if ("1" == "${punished0}" && "1" == "${answering0}") {
+        setIsPunishedAndSetIsAnswering("card1");
+    } else {
+        if ("1" == "${punished0}") {
+            setIsPunished("card1");
+        }
+        if ("1" == "${answering0}") {
+            setIsAnswering("card1");
+        }
     }
-    if ("1" == "${answering1}") {
-        setIsAnswering("card2");
-    }
-    if ("1" == "${answering2}") {
-        setIsAnswering("card3");
-    }
-    if ("1" == "${answering3}") {
-        setIsAnswering("card4");
-    }
+    if ("1" == "${punished1}" && "1" == "${answering1}") {
+        setIsPunishedAndSetIsAnswering("card2");
+    } else {
+        if ("1" == "${punished1}") {
+            setIsPunished("card2");
+        }
 
-    if ("1" == "${punished0}") {
-        setIsPunished("card1");
+        if ("1" == "${answering1}") {
+            setIsAnswering("card2");
+        }
     }
-    if ("1" == "${punished1}") {
-        setIsPunished("card2");
+    if ("1" == "${punished2}" && "1" == "${answering2}") {
+        setIsPunishedAndSetIsAnswering("card3");
+    } else {
+        if ("1" == "${punished2}") {
+            setIsPunished("card3");
+        }
+        if ("1" == "${answering2}") {
+            setIsAnswering("card3");
+        }
     }
-    if ("1" == "${punished2}") {
-        setIsPunished("card3");
-    }
-    if ("1" == "${punished3}") {
-        setIsPunished("card4");
-    }
+    if ("1" == "${punished3}" && "1" == "${answering3}") {
+        setIsPunishedAndSetIsAnswering("card4");
+    } else {
+        if ("1" == "${punished3}") {
+            setIsPunished("card4");
+        }
 
+        if ("1" == "${answering3}") {
+            setIsAnswering("card4");
+        }
+    }
 
     function setIsPunished(Nid) {
-        $(Nid).setAttribute("style", "border-color: #e85600;box-shadow: 0 0 0 .12rem rgba(232, 86, 0, .2);");
+        $(Nid).setAttribute("style", "background:repeating-linear-gradient(45deg, #ffcccc 0,#ffcccc 5px,#fff 5px,#fff 20px);border-color: #e85600;box-shadow: 0 0 0 .12rem rgba(232, 86, 0, .2);");
     }
 
     function setIsAnswering(Nid) {
         $(Nid).setAttribute("style", "border-color: #3634d2;box-shadow: 0 0 0 .12rem rgba(87, 85, 217, .2);");
     }
 
-    function setMe(Nid) {
-        $(Nid).setAttribute("class", "card-title h5 text-success");
+    function setIsPunishedAndSetIsAnswering(Nid) {
+        $(Nid).setAttribute("style", "background:repeating-linear-gradient(45deg, #ffcccc 0,#ffcccc 5px,#fff 5px,#fff 20px);border-color: #3634d2;box-shadow: 0 0 0 .12rem rgba(87, 85, 217, .2);");
     }
 
-    $("name0").innerText = "${name0}";
-    $("name1").innerText = "${name1}";
-    $("name2").innerText = "${name2}";
-    $("name3").innerText = "${name3}";
+    function setMe(Nid) {
+        $(Nid).innerHTML = "<span class='badge' data-badge=' Me '>" + myName + "</span>";
+    }
+
 
     var COINS = "Coins:";
     $("coin1").innerText = COINS + "${coin0}";
@@ -274,6 +314,29 @@
         opt2.value = "${questionId}";
         opt3.name = "option";
         opt3.value = myOption;
+        temp.appendChild(opt1);
+        temp.appendChild(opt2);
+        temp.appendChild(opt3);
+        document.body.appendChild(temp);
+        temp.submit();
+        return temp;
+    }
+
+
+    function timeout() {
+        var temp = document.createElement("form");
+        temp.action = "answer";
+        temp.method = "post";
+        temp.style.display = "none";
+        var opt1 = document.createElement("textarea");
+        var opt2 = document.createElement("textarea");
+        var opt3 = document.createElement("textarea");
+        opt1.name = "name";
+        opt1.value = "${myName}";
+        opt2.name = "questionId";
+        opt2.value = "${questionId}";
+        opt3.name = "option";
+        opt3.value = "e";
         temp.appendChild(opt1);
         temp.appendChild(opt2);
         temp.appendChild(opt3);
